@@ -32,3 +32,50 @@ export const LP_SERVICE_FILES: Record<string, string> = {
   portret: "/diensten/portret",
   huwelijk: "/diensten/huwelijk",
 };
+
+/* Extra service-page labels (gallery head, cross-link head, package badge + CTA)
+   that aren't in the shared MW content — from service-page.jsx SP_LABELS.
+   Passed as explicit props (the prototype mutated these onto the MW singleton). */
+export interface SpGalleryLabels {
+  overline: string;
+  title: string;
+  note: string;
+}
+export interface SpLabelSet {
+  gallery: SpGalleryLabels;
+  cross: string;
+  popular: string;
+  ask: string;
+}
+export const SP_LABELS: Record<Lang, SpLabelSet> = {
+  nl: {
+    gallery: {
+      overline: "Galerij",
+      title: "Het werk, op film.",
+      note: "Een selectie sfeerbeelden — de korrel, het licht en de kleur die enkel analoog ontstaan.",
+    },
+    cross: "Andere diensten",
+    popular: "Meest gekozen",
+    ask: "Vraag aan",
+  },
+  en: {
+    gallery: {
+      overline: "Gallery",
+      title: "The work, on film.",
+      note: "A selection of images — the grain, light and colour that only analogue creates.",
+    },
+    cross: "Other services",
+    popular: "Most chosen",
+    ask: "Enquire",
+  },
+  fr: {
+    gallery: {
+      overline: "Galerie",
+      title: "Le travail, sur film.",
+      note: "Une sélection d’images — le grain, la lumière et la couleur que seul l’analogique crée.",
+    },
+    cross: "Autres services",
+    popular: "Le plus choisi",
+    ask: "Demander",
+  },
+};

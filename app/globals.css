@@ -1125,3 +1125,276 @@ html.force-reveal .lp-kin .ch {
 }
 html.force-reveal .lp-hero-over .ln { transform: none !important; }
 html.force-reveal .lp-step::before { transform: none !important; }
+
+/* ============================================================
+   Milo Weiler — Dienstpagina's
+   Bovenop styles.css. Eigen sfeer per dienst via [data-svc].
+   sp- prefix. uitvaart = sereen · portret = tijdloos · huwelijk = warm
+   ============================================================ */
+
+/* ---- per-service accent + sfeer (light theme) ---- */
+[data-svc="uitvaart"] { --accent: #5f6671; --sp-soft: rgba(95,102,113,0.10); --sp-feat: #5f6671; }
+[data-svc="portret"]  { --accent: #8a6a4a; --sp-soft: rgba(138,106,74,0.11); --sp-feat: #8a6a4a; }
+[data-svc="huwelijk"] { --accent: #b07a5e; --sp-soft: rgba(176,122,94,0.12); --sp-feat: #b07a5e; }
+/* dark theme keeps the warm parchment accent from styles.css; soften the tint */
+[data-theme="nacht"][data-svc] { --sp-soft: rgba(182,169,142,0.10); }
+
+/* ---- top bar (reuse landing feel) ---- */
+.sp-top {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 80;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: clamp(16px, 2.4vw, 26px) clamp(20px, 4vw, 56px);
+  background: color-mix(in srgb, var(--bg) 82%, transparent);
+  -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--line-soft);
+}
+.sp-back {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--ink-soft);
+  transition: gap 0.4s var(--ease), color 0.4s var(--ease);
+}
+.sp-back .ar { transition: transform 0.4s var(--ease); }
+.sp-back:hover { gap: 14px; color: var(--ink); }
+.sp-back:hover .ar { transform: translateX(-3px); }
+.sp-top-mark { font-family: var(--font-display); font-size: 18px; letter-spacing: 0.01em; white-space: nowrap; }
+.sp-top .lang { display: inline-flex; align-items: center; gap: 8px; }
+@media (max-width: 640px) { .sp-top-mark { display: none; } }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.sp-hero { padding: clamp(128px, 20vh, 220px) 0 clamp(64px, 10vh, 120px); position: relative; }
+.sp-hero-crumb {
+  display: inline-flex; align-items: center; gap: 12px; margin-bottom: 22px;
+}
+.sp-hero-crumb .ix { font-family: var(--mono); font-size: 11px; letter-spacing: 0.16em; color: var(--accent); }
+.sp-hero-crumb .ln { width: 30px; height: 1px; background: var(--line-strong); }
+.sp-hero-title {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(46px, 9.5vw, 150px); line-height: 0.92;
+  letter-spacing: -0.02em; margin: 0; text-wrap: balance;
+}
+.sp-hero-title .l2 { display: block; }
+.sp-hero-sub {
+  color: var(--ink-soft); font-size: clamp(16px, 1.7vw, 21px);
+  line-height: 1.55; max-width: 46ch; margin: clamp(26px, 4vh, 44px) 0 0;
+}
+.sp-hero-fig { overflow: hidden; position: relative; }
+.sp-hero-fig .frame { width: 100%; height: 100%; }
+.sp-hero-fig .parallax { width: 100%; height: 100%; }
+
+/* centered (uitvaart) — sereen, veel rust */
+.sp-hero--centered { text-align: center; }
+.sp-hero--centered .sp-hero-crumb { justify-content: center; }
+.sp-hero--centered .sp-hero-sub { margin-left: auto; margin-right: auto; }
+.sp-hero--centered .sp-hero-fig {
+  margin: clamp(44px, 7vh, 90px) auto 0; max-width: 1040px;
+  aspect-ratio: 16 / 9;
+}
+
+/* split (portret) — asymmetrisch, staand beeld rechts */
+.sp-hero--split .sp-hero-grid {
+  display: grid; grid-template-columns: 1.15fr 0.85fr;
+  gap: clamp(36px, 6vw, 92px); align-items: center;
+}
+.sp-hero--split .sp-hero-fig { aspect-ratio: 4 / 5; }
+@media (max-width: 860px) {
+  .sp-hero--split .sp-hero-grid { grid-template-columns: 1fr; gap: 40px; }
+  .sp-hero--split .sp-hero-fig { max-width: 420px; aspect-ratio: 4/5; }
+}
+
+/* wide (huwelijk) — luchtig, breed beeld onder */
+.sp-hero--wide .sp-hero-fig {
+  margin-top: clamp(44px, 7vh, 90px); aspect-ratio: 21 / 9; width: 100%;
+}
+
+/* ============================================================
+   WHY — uitgebreide filosofie + pull-quote
+   ============================================================ */
+.sp-why { padding: clamp(72px, 12vh, 150px) 0; }
+.sp-why-grid {
+  display: grid; grid-template-columns: 1.25fr 0.75fr;
+  gap: clamp(36px, 6vw, 96px); align-items: start;
+}
+.sp-why-lead {
+  font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(26px, 3.6vw, 50px); line-height: 1.1;
+  letter-spacing: -0.012em; margin: 22px 0 0; max-width: 18ch;
+  text-wrap: balance;
+}
+.sp-why-body { margin-top: clamp(28px, 4vh, 48px); }
+.sp-why-body p { color: var(--ink-soft); line-height: 1.66; margin: 0; max-width: 52ch; }
+.sp-why-body p + p { margin-top: 20px; }
+.sp-why-fig { aspect-ratio: 4 / 5; overflow: hidden; }
+.sp-why-fig .frame { width: 100%; height: 100%; }
+.sp-pull {
+  margin: clamp(64px, 10vh, 130px) 0 0; padding: clamp(40px, 6vh, 76px) 0;
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+.sp-pull p {
+  font-family: var(--font-display); font-weight: 400; font-style: italic;
+  font-size: clamp(28px, 5vw, 70px); line-height: 1.06; margin: 0;
+  letter-spacing: -0.014em; color: var(--ink); text-wrap: balance;
+}
+.sp-pull .rw-line { display: block; }
+@media (max-width: 860px) {
+  .sp-why-grid { grid-template-columns: 1fr; gap: 40px; }
+  .sp-why-fig { max-width: 420px; }
+}
+
+/* ============================================================
+   HOW — werkwijze (genummerde stappen)
+   ============================================================ */
+.sp-how { padding: clamp(72px, 12vh, 150px) 0; background: var(--bg-2); transition: background-color .7s var(--ease); }
+.sp-how-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  gap: clamp(28px, 4vw, 64px) clamp(36px, 6vw, 92px);
+  margin-top: clamp(44px, 7vh, 84px);
+}
+.sp-step { display: flex; gap: clamp(18px, 2vw, 30px); align-items: baseline; }
+.sp-step-no {
+  font-family: var(--font-display); font-size: clamp(34px, 4vw, 60px);
+  line-height: 0.9; color: var(--accent); flex: none; min-width: 1.6em;
+}
+.sp-step-name { font-family: var(--font-display); font-size: clamp(21px, 2.3vw, 30px); line-height: 1.1; margin: 0 0 12px; }
+.sp-step-text { color: var(--ink-soft); font-size: 15px; line-height: 1.6; margin: 0; max-width: 42ch; }
+@media (max-width: 720px) { .sp-how-grid { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   PIECE — het eindproduct
+   ============================================================ */
+.sp-piece { padding: clamp(72px, 12vh, 150px) 0; }
+.sp-piece-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(36px, 5vw, 90px); align-items: center;
+}
+.sp-piece-fig { position: relative; aspect-ratio: 4 / 5; overflow: visible; }
+.sp-piece-fig .frame { width: 100%; height: 100%; }
+.sp-piece-body { color: var(--ink-soft); line-height: 1.66; margin: 24px 0 0; max-width: 46ch; }
+.sp-spec { list-style: none; margin: 32px 0 0; padding: 0; border-top: 1px solid var(--line); }
+.sp-spec li { display: flex; gap: 16px; align-items: baseline; padding: 13px 0; border-bottom: 1px solid var(--line); font-size: 14.5px; color: var(--ink-soft); }
+.sp-spec .ix { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; color: var(--ink-faint); min-width: 26px; }
+.sp-piece-result {
+  position: absolute; left: 18px; bottom: 18px;
+  display: flex; flex-direction: column; gap: 3px;
+  background: var(--bg); padding: 13px 18px; border: 1px solid var(--line);
+  box-shadow: 0 18px 40px -28px rgba(0,0,0,0.45);
+}
+.sp-piece-result .k { font-family: var(--mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--ink-faint); }
+.sp-piece-result .v { font-family: var(--font-display); font-size: 18px; line-height: 1.05; }
+.sp-piece[data-fig="left"] .sp-piece-fig { order: 0; }
+.sp-piece[data-fig="left"] .sp-piece-text { order: 1; }
+@media (max-width: 860px) {
+  .sp-piece-grid { grid-template-columns: 1fr; gap: 40px; }
+  .sp-piece-fig { max-width: 440px; order: 0 !important; }
+}
+
+/* ============================================================
+   PACKAGES / FORMULES
+   ============================================================ */
+.sp-pkg { padding: clamp(72px, 12vh, 150px) 0; background: var(--bg-2); transition: background-color .7s var(--ease); }
+.sp-pkg-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(18px, 2vw, 28px); margin-top: clamp(44px, 7vh, 84px);
+  align-items: stretch;
+}
+.sp-card {
+  display: flex; flex-direction: column;
+  background: var(--bg); border: 1px solid var(--line);
+  padding: clamp(26px, 2.6vw, 38px) clamp(22px, 2.2vw, 32px);
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease), border-color 0.5s var(--ease);
+}
+.sp-card:hover { transform: translateY(-5px); box-shadow: 0 30px 60px -40px rgba(0,0,0,0.4); }
+.sp-card[data-feat="1"] { border-color: var(--accent); box-shadow: 0 1px 0 var(--sp-soft) inset; }
+.sp-card-tag {
+  align-self: flex-start; font-family: var(--mono); font-size: 9px;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent);
+  border: 1px solid var(--accent); border-radius: 999px; padding: 4px 10px;
+  margin-bottom: 18px; opacity: 0; height: 0; padding-top: 0; padding-bottom: 0; border: 0; margin: 0;
+}
+.sp-card[data-feat="1"] .sp-card-tag { opacity: 1; height: auto; padding: 4px 10px; border: 1px solid var(--accent); margin-bottom: 18px; }
+.sp-card-name { font-family: var(--font-display); font-size: clamp(26px, 2.8vw, 36px); line-height: 1.02; margin: 0; }
+.sp-card-tagline { color: var(--ink-soft); font-size: 14.5px; margin: 8px 0 0; }
+.sp-card-inc { list-style: none; margin: 24px 0 0; padding: 22px 0 0; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.sp-card-inc li { display: flex; gap: 12px; align-items: baseline; font-size: 14.5px; color: var(--ink-soft); line-height: 1.45; }
+.sp-card-inc li::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); flex: none; transform: translateY(6px); }
+.sp-card-foot { margin-top: 28px; padding-top: 22px; border-top: 1px solid var(--line); display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.sp-card-price { font-family: var(--font-display); font-size: 17px; color: var(--ink); }
+.sp-card-cta { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); display: inline-flex; gap: 8px; transition: gap 0.4s var(--ease); }
+.sp-card:hover .sp-card-cta { gap: 13px; }
+@media (max-width: 840px) { .sp-pkg-grid { grid-template-columns: 1fr; max-width: 460px; margin-left: auto; margin-right: auto; } }
+
+/* ============================================================
+   GALLERY — sfeerbeelden
+   ============================================================ */
+.sp-gal { padding: clamp(72px, 12vh, 150px) 0; }
+.sp-gal-grid {
+  display: grid; grid-template-columns: repeat(12, 1fr);
+  gap: clamp(14px, 1.6vw, 22px); margin-top: clamp(44px, 7vh, 84px);
+}
+.sp-gal-grid .frame { width: 100%; height: 100%; }
+.sp-gal-grid > * { overflow: hidden; }
+.sp-g1 { grid-column: span 7; aspect-ratio: 3/2; }
+.sp-g2 { grid-column: span 5; aspect-ratio: 4/5; }
+.sp-g3 { grid-column: span 5; aspect-ratio: 4/5; }
+.sp-g4 { grid-column: span 7; aspect-ratio: 3/2; }
+@media (max-width: 720px) {
+  .sp-gal-grid { grid-template-columns: 1fr 1fr; }
+  .sp-g1, .sp-g2, .sp-g3, .sp-g4 { grid-column: span 1; aspect-ratio: 4/5; }
+}
+
+/* ============================================================
+   FAQ
+   ============================================================ */
+.sp-faq { padding: clamp(72px, 12vh, 150px) 0; background: var(--bg-2); transition: background-color .7s var(--ease); }
+.sp-faq-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(36px, 6vw, 96px); align-items: start; margin-top: 6px; }
+.sp-faq-list { border-top: 1px solid var(--line); }
+.sp-faq-item { border-bottom: 1px solid var(--line); }
+.sp-faq-q {
+  width: 100%; text-align: left; background: none; border: 0; padding: 24px 0;
+  display: flex; align-items: baseline; justify-content: space-between; gap: 20px;
+  font-family: var(--font-display); font-size: clamp(20px, 2.1vw, 27px);
+  line-height: 1.18; color: var(--ink);
+}
+.sp-faq-q .sign { font-family: var(--mono); font-size: 20px; color: var(--accent); flex: none; transition: transform 0.4s var(--ease); line-height: 1; }
+.sp-faq-item[data-open="1"] .sp-faq-q .sign { transform: rotate(45deg); }
+.sp-faq-a { overflow: hidden; max-height: 0; transition: max-height 0.5s var(--ease), opacity 0.4s var(--ease), padding 0.4s var(--ease); opacity: 0; }
+.sp-faq-item[data-open="1"] .sp-faq-a { max-height: 360px; opacity: 1; padding-bottom: 26px; }
+.sp-faq-a p { margin: 0; color: var(--ink-soft); line-height: 1.66; max-width: 56ch; }
+@media (max-width: 760px) { .sp-faq-grid { grid-template-columns: 1fr; gap: 26px; } }
+
+/* ============================================================
+   CLOSING CTA (cross-link naar de andere diensten + contact)
+   ============================================================ */
+.sp-cta { padding: clamp(86px, 14vh, 180px) 0; text-align: center; }
+.sp-cta-title { font-family: var(--font-display); font-weight: 400; font-size: clamp(36px, 6.5vw, 96px); line-height: 0.98; letter-spacing: -0.02em; margin: 18px 0 0; text-wrap: balance; }
+.sp-cta-body { color: var(--ink-soft); max-width: 48ch; margin: 26px auto 0; line-height: 1.6; }
+.sp-cta-actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 38px; }
+.sp-cross { margin-top: clamp(64px, 10vh, 120px); padding-top: clamp(40px, 6vh, 70px); border-top: 1px solid var(--line); }
+.sp-cross-h { margin-bottom: 28px; }
+.sp-cross-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(18px, 2.4vw, 36px); }
+.sp-cross-card {
+  display: flex; align-items: center; gap: 22px; text-align: left;
+  padding: 22px; border: 1px solid var(--line); background: var(--bg);
+  transition: transform 0.5s var(--ease), border-color 0.5s var(--ease);
+}
+.sp-cross-card:hover { transform: translateY(-4px); border-color: var(--accent); }
+.sp-cross-fig { width: 96px; flex: none; aspect-ratio: 4/5; overflow: hidden; }
+.sp-cross-fig .frame { width: 100%; height: 100%; }
+.sp-cross-no { font-family: var(--mono); font-size: 10px; letter-spacing: 0.16em; color: var(--accent); }
+.sp-cross-name { font-family: var(--font-display); font-size: clamp(20px, 2.2vw, 28px); line-height: 1.05; margin: 6px 0 0; }
+.sp-cross-note { color: var(--ink-soft); font-size: 13.5px; margin: 6px 0 0; }
+@media (max-width: 680px) { .sp-cross-grid { grid-template-columns: 1fr; } .sp-cross-fig { width: 76px; } }
+
+/* ---- reduced-motion / print safety for hero entrance ---- */
+html.force-reveal .sp-hero-crumb,
+html.force-reveal .sp-hero-title,
+html.force-reveal .sp-hero-sub { opacity: 1 !important; transform: none !important; }
+
+/* Dark-mode soften: data-svc lives on the page wrapper <div> (for flash-free,
+   SSR-correct accent), so the prototype's compound [data-theme="nacht"][data-svc]
+   needs a descendant-combinator variant to also reach that div under a dark <html>. */
+[data-theme="nacht"] [data-svc],
+[data-theme="nacht"][data-svc] { --sp-soft: rgba(182, 169, 142, 0.10); }
