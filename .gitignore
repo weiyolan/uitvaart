@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Claude Design handoff reference (not part of the app)
 _design_handoff/
+
+# MSYS/Cygwin crash dumps
+*.stackdump

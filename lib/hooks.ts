@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import type { RefObject } from "react";
 
 /* ------------------------------------------------------------------
    useInView — adds reveal state once the element scrolls into view.
@@ -120,4 +121,44 @@ export function useReducedMotion(): boolean {
     return () => m.removeEventListener("change", on);
   }, []);
   return reduce;
+}
+
+/* ------------------------------------------------------------------
+   useParallax — gently translates a ref as it passes through the
+   viewport by writing a px offset to the `--py` CSS var (from
+   components.jsx). Respects reduced-motion and <html data-motion="off">.
+   ------------------------------------------------------------------ */
+export function useParallax(ref: RefObject<HTMLElement | null>, amount = 60): void {
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      if (document.documentElement.getAttribute("data-motion") === "off") {
+        el.style.setProperty("--py", "0px");
+        return;
+      }
+      const r = el.getBoundingClientRect();
+      const vh = window.innerHeight || 800;
+      // progress: -1 (just below) -> 1 (just above)
+      const p = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);
+      const y = Math.max(-1, Math.min(1, p)) * amount;
+      el.style.setProperty("--py", `${y.toFixed(1)}px`);
+    };
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [ref, amount]);
 }
