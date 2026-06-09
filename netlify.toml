@@ -3,3 +3,8 @@
 
 [build.environment]
   NODE_VERSION = "22"
+
+# Engage the Netlify Next.js Runtime (OpenNext adapter). Without it, `next build`
+# produces no server handler or routing, so every App Router route returns a 404.
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
