@@ -181,12 +181,15 @@ section { position: relative; }
   font-size: 11.5px; font-weight: 500; letter-spacing: 0.08em;
   color: var(--ink-faint);
 }
-.lang button {
+.lang button,
+.lang a {
   background: none; border: 0; padding: 2px 1px;
   color: var(--ink-faint); font: inherit; letter-spacing: inherit;
+  text-decoration: none;
   transition: color 0.3s var(--ease);
 }
-.lang button[data-on="1"] { color: var(--ink); }
+.lang button[data-on="1"],
+.lang a[data-on="1"] { color: var(--ink); }
 .lang .sep { opacity: 0.5; }
 
 @media (max-width: 720px) {

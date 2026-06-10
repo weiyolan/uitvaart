@@ -1,44 +1,21 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { LANGS } from "@/lib/content";
-import type { Lang } from "@/lib/content";
 import { useReducedMotion } from "@/lib/hooks";
 
 export interface SiteChrome {
-  lang: Lang;
-  setLang: (l: Lang) => void;
   theme: string;
   toggleTheme: () => void;
   reduce: boolean;
 }
 
-/* Shared site chrome: NL/EN/FR language + light/dark theme, persisted to
-   localStorage (mw-lang / mw-theme) and coordinated with the no-flash inline
-   script in layout.tsx. Used by both the landing and the service pages so the
-   theme/lang carry across navigation. */
+/* Shared site chrome: light/dark theme, persisted to localStorage (mw-theme)
+   and coordinated with the no-flash inline script in the [lang] layout.
+   (Language is URL state now — the locale segment — so no lang state here.) */
 export function useSiteChrome(): SiteChrome {
-  const [lang, setLang] = useState<Lang>("nl");
   const [theme, setTheme] = useState<string>("licht");
   const themeHydrated = useRef(false);
   const reduce = useReducedMotion();
-
-  // restore stored language on mount
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem("mw-lang");
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      if (stored && (LANGS as string[]).includes(stored)) setLang(stored as Lang);
-    } catch {}
-  }, []);
-
-  // persist language + reflect on <html lang>
-  useEffect(() => {
-    try {
-      localStorage.setItem("mw-lang", lang);
-    } catch {}
-    document.documentElement.lang = lang;
-  }, [lang]);
 
   // theme: skip the first run so the no-flash inline <script> attribute stands;
   // only write localStorage after hydration so a visitor's choice isn't clobbered.
@@ -77,5 +54,5 @@ export function useSiteChrome(): SiteChrome {
 
   const toggleTheme = () => setTheme((t) => (t === "nacht" ? "licht" : "nacht"));
 
-  return { lang, setLang, theme, toggleTheme, reduce };
+  return { theme, toggleTheme, reduce };
 }

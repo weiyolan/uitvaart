@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { ServicePage } from "@/lib/content-pages";
+import type { ServicePage } from "@/lib/site-types";
 import { Overline } from "@/components/shared/Overline";
 import { Reveal } from "@/components/shared/Reveal";
 import { RevealWords } from "@/components/shared/RevealWords";

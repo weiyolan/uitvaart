@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { SiteContent, Lang } from "@/lib/content";
-import { LP_SHOW_HEAD } from "@/lib/constants";
+import type { SiteContent } from "@/lib/site-types";
 import { Overline } from "@/components/shared/Overline";
 import { FilmFrame } from "@/components/shared/FilmFrame";
 import { RevealWords } from "@/components/shared/RevealWords";
@@ -10,11 +9,10 @@ import { RevealWords } from "@/components/shared/RevealWords";
 /* SHOWCASE — COCOON scroll-scale: the largest (center) frame grows to
    full-bleed as the section scrolls; side frames slide out and the caption
    reveals. Driven by a CSS custom property `--p` (0 → 1). */
-export function Showcase({ c, lang }: { c: SiteContent; lang: Lang }) {
+export function Showcase({ c, head }: { c: SiteContent; head: string }) {
   const secRef = useRef<HTMLElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const svc = c.philosophy.services; // [uitvaart, portret, huwelijk]
-  const head = LP_SHOW_HEAD[lang] || LP_SHOW_HEAD.nl;
 
   useEffect(() => {
     const section = secRef.current;
@@ -43,6 +41,10 @@ export function Showcase({ c, lang }: { c: SiteContent; lang: Lang }) {
       window.removeEventListener("resize", onScroll);
     };
   }, []);
+
+  // The showcase composition assumes the three services; bail safely if a
+  // dataset is incomplete rather than crashing the whole landing page.
+  if (svc.length < 3) return null;
 
   return (
     <section className="lp-showcase" id="overzicht" ref={secRef} style={{ height: "260vh" }}>
@@ -82,6 +84,7 @@ export function Showcase({ c, lang }: { c: SiteContent; lang: Lang }) {
 /* Reduced-motion / static fallback: plain 3-up gallery. */
 export function StaticShowcase({ c }: { c: SiteContent }) {
   const svc = c.philosophy.services;
+  if (svc.length < 3) return null;
   return (
     <section className="lp-showcase" id="overzicht">
       <div className="lp-show-static">

@@ -1,6 +1,6 @@
 "use client";
 
-import type { SiteContent } from "@/lib/content";
+import type { SiteContent, SiteContactLine } from "@/lib/site-types";
 import { Overline } from "@/components/shared/Overline";
 import { Reveal } from "@/components/shared/Reveal";
 import { RevealWords } from "@/components/shared/RevealWords";
@@ -21,16 +21,16 @@ export function Contact({ c }: { c: SiteContent }) {
             {c.contact.body}
           </Reveal>
           <Reveal className="contact-actions">
-            <a className="btn" href="tel:+32476506209">
+            <a className="btn" href={c.contact.callHref}>
               {c.contact.callBtn}
             </a>
-            <a className="btn btn--ghost" href="mailto:milo.weiler@gmail.com">
+            <a className="btn btn--ghost" href={c.contact.mailHref}>
               {c.contact.mailBtn}
             </a>
           </Reveal>
         </div>
         <Reveal className="contact-card">
-          {c.contact.lines.map((l, i) => (
+          {c.contact.lines.map((l: SiteContactLine, i: number) => (
             <div className="cline" key={i}>
               <span className="k">{l.k}</span>
               {l.href ? (

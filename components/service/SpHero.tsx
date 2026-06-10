@@ -1,7 +1,8 @@
 "use client";
 
 import { useRef } from "react";
-import type { ServicePage } from "@/lib/content-pages";
+import { stegaClean } from "@sanity/client/stega";
+import type { ServicePage, Figure } from "@/lib/site-types";
 import { useParallax } from "@/lib/hooks";
 import { Reveal } from "@/components/shared/Reveal";
 import { RevealWords } from "@/components/shared/RevealWords";
@@ -17,6 +18,7 @@ function ParallaxFig({
   tag?: string;
   meta?: string;
   corner?: string;
+  image?: Figure["image"];
 }) {
   const ref = useRef<HTMLDivElement>(null);
   useParallax(ref, amount);
@@ -30,6 +32,8 @@ function ParallaxFig({
 /* HERO — variant switched on page.hero (centered | split | wide). */
 export function SpHero({ page }: { page: ServicePage }) {
   const h = page.head;
+  // Layout-bearing value from Sanity: clean stega chars before branching.
+  const variant = stegaClean(page.hero);
   const crumb = (
     <Reveal className="sp-hero-crumb">
       <span className="ix">{page.crumb}</span>
@@ -50,7 +54,7 @@ export function SpHero({ page }: { page: ServicePage }) {
     </Reveal>
   );
 
-  if (page.hero === "split") {
+  if (variant === "split") {
     return (
       <header className="sp-hero sp-hero--split" id="top">
         <div className="wrap sp-hero-grid">
@@ -60,7 +64,7 @@ export function SpHero({ page }: { page: ServicePage }) {
             {sub}
           </div>
           <Reveal className="sp-hero-fig">
-            <ParallaxFig amount={34} className="frame--light" tag={h.fig.tag} meta={h.fig.meta} corner={h.fig.corner} />
+            <ParallaxFig amount={34} className="frame--light" tag={h.fig?.tag} meta={h.fig?.meta} corner={h.fig?.corner} image={h.fig?.image} />
           </Reveal>
         </div>
       </header>
@@ -69,18 +73,19 @@ export function SpHero({ page }: { page: ServicePage }) {
 
   // centered + wide share the stacked layout; fig sizing differs via CSS
   return (
-    <header className={"sp-hero sp-hero--" + page.hero} id="top">
+    <header className={"sp-hero sp-hero--" + variant} id="top">
       <div className="wrap">
         {crumb}
         {title}
         {sub}
         <Reveal className="sp-hero-fig">
           <ParallaxFig
-            amount={page.hero === "wide" ? 46 : 38}
+            amount={variant === "wide" ? 46 : 38}
             className="frame--light"
-            tag={h.fig.tag}
-            meta={h.fig.meta}
-            corner={h.fig.corner}
+            tag={h.fig?.tag}
+            meta={h.fig?.meta}
+            corner={h.fig?.corner}
+            image={h.fig?.image}
           />
         </Reveal>
       </div>

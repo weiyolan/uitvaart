@@ -1,10 +1,11 @@
 "use client";
 
-import type { SiteContent } from "@/lib/content";
-import { LP_SERVICE_FILES } from "@/lib/constants";
+import type { Locale } from "@/lib/i18n";
+import type { BusinessInfo, SiteContent } from "@/lib/site-types";
+import { servicePath } from "@/lib/routes";
 import { lpScrollTo } from "@/lib/utils";
 
-export function Footer({ c }: { c: SiteContent }) {
+export function Footer({ lang, c, business }: { lang: Locale; c: SiteContent; business: BusinessInfo }) {
   return (
     <footer className="foot">
       <div className="wrap">
@@ -22,21 +23,23 @@ export function Footer({ c }: { c: SiteContent }) {
           <div className="foot-cols">
             <div className="foot-col">
               <h4>{c.foot.navTitle}</h4>
-              <a href={LP_SERVICE_FILES.uitvaart}>{c.nav.uitvaart}</a>
-              <a href={LP_SERVICE_FILES.portret}>{c.nav.portret}</a>
-              <a href={LP_SERVICE_FILES.huwelijk}>{c.nav.huwelijk}</a>
+              <a href={servicePath(lang, "uitvaart")}>{c.nav.uitvaart}</a>
+              <a href={servicePath(lang, "portret")}>{c.nav.portret}</a>
+              <a href={servicePath(lang, "huwelijk")}>{c.nav.huwelijk}</a>
               <a href="#traject" onClick={lpScrollTo("traject")}>
                 {c.process.overline.replace(/^[0-9]+ — /, "")}
               </a>
             </div>
             <div className="foot-col">
               <h4>{c.foot.contactTitle}</h4>
-              <a href="tel:+32476506209">+32 476 50 62 09</a>
-              <a href="mailto:milo.weiler@gmail.com">milo.weiler@gmail.com</a>
-              <a href="https://instagram.com/miloweiler" target="_blank" rel="noreferrer">
-                @miloweiler
+              <a href={`tel:${business.phone}`}>{business.phoneDisplay}</a>
+              <a href={`mailto:${business.email}`}>{business.email}</a>
+              <a href={business.instagramUrl} target="_blank" rel="noreferrer">
+                {business.instagramHandle}
               </a>
-              <p>Hof Savelkoul 40, 2640 Mortsel</p>
+              <p>
+                {business.streetAddress}, {business.postalCode} {business.city}
+              </p>
             </div>
             <div className="foot-col">
               <h4>{c.foot.legalTitle}</h4>

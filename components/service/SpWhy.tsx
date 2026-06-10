@@ -1,6 +1,6 @@
 "use client";
 
-import type { ServicePage } from "@/lib/content-pages";
+import type { ServicePage } from "@/lib/site-types";
 import { Overline } from "@/components/shared/Overline";
 import { Reveal } from "@/components/shared/Reveal";
 import { RevealWords } from "@/components/shared/RevealWords";
@@ -23,13 +23,13 @@ export function SpWhy({ page }: { page: ServicePage }) {
             <div className="sp-why-body">
               {w.body.map((p, i) => (
                 <Reveal as="p" key={i}>
-                  {p}
+                  {p.value}
                 </Reveal>
               ))}
             </div>
           </div>
           <Reveal className="sp-why-fig">
-            <FilmFrame className="frame--light" tag={w.fig.tag} meta={w.fig.meta} corner={w.fig.corner} />
+            <FilmFrame className="frame--light" tag={w.fig?.tag} meta={w.fig?.meta} corner={w.fig?.corner} image={w.fig?.image} />
           </Reveal>
         </div>
         <div className="sp-pull">
