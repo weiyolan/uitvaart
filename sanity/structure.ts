@@ -21,6 +21,10 @@ export const structure: StructureResolver = (S) =>
         ),
       S.divider(),
       S.listItem()
+        .title("Beeldbibliotheek")
+        .icon(ImagesIcon)
+        .child(S.documentTypeList("photo").title("Beeldbibliotheek")),
+      S.listItem()
         .title("Site-instellingen")
         .icon(CogIcon)
         .child(S.document().schemaType("siteSettings").documentId("siteSettings").title("Site-instellingen")),

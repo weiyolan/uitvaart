@@ -80,25 +80,10 @@ export const serviceType = defineType({
     defineField({
       name: "indexImage",
       title: "Indexkader: scan",
-      description: "Optionele foto voor het indexkader op de homepagina.",
-      type: "image",
+      description: "Optionele foto uit de bibliotheek voor het indexkader op de homepagina.",
+      type: "reference",
+      to: [{ type: "photo" }],
       group: "identity",
-      options: { hotspot: true },
-      fields: [
-        defineField({
-          name: "alt",
-          title: "Alternative text",
-          type: "internationalizedArrayString",
-          validation: (rule) =>
-            rule.custom((alt, context) => {
-              const parent = context.parent as { asset?: unknown } | undefined;
-              if (parent?.asset && !nlValue(alt)) {
-                return "Alt-tekst is verplicht wanneer een scan is geüpload (belangrijk voor SEO).";
-              }
-              return true;
-            }),
-        }),
-      ],
     }),
 
     /* ---- Landing-page row ---- */
