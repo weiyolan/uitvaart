@@ -102,7 +102,13 @@ export const HOME_QUERY = defineQuery(`{
       "pull": coalesce(philosophy.pull[language == $lang][0].value, philosophy.pull[language == "nl"][0].value, ""),
       "lead": coalesce(philosophy.lead[language == $lang][0].value, philosophy.lead[language == "nl"][0].value, ""),
       "body": coalesce(philosophy.body[language == $lang][0].value, philosophy.body[language == "nl"][0].value, ""),
-      "indexOverline": coalesce(philosophy.indexOverline[language == $lang][0].value, philosophy.indexOverline[language == "nl"][0].value, "")
+      "indexOverline": coalesce(philosophy.indexOverline[language == $lang][0].value, philosophy.indexOverline[language == "nl"][0].value, ""),
+      "portrait": philosophy.portrait->{
+        "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, ""),
+        "asset": image.asset->{ _id, url, metadata{ lqip, dimensions{ width, height } } },
+        "hotspot": image.hotspot,
+        "crop": image.crop
+      }
     },
     "process": {
       "overline": coalesce(process.overline[language == $lang][0].value, process.overline[language == "nl"][0].value, ""),
@@ -338,6 +344,12 @@ export const SERVICE_QUERY = defineQuery(`{
         "q": coalesce(q[language == $lang][0].value, q[language == "nl"][0].value, ""),
         "a": coalesce(a[language == $lang][0].value, a[language == "nl"][0].value, "")
       }, [])
+    },
+    "galleryImage": page.galleryImage->{
+      "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, ""),
+      "asset": image.asset->{ _id, url, metadata{ lqip, dimensions{ width, height } } },
+      "hotspot": image.hotspot,
+      "crop": image.crop
     }
   },
   "others": *[_type == "service" && slug.current != $slug] | order(order asc){
@@ -348,7 +360,13 @@ export const SERVICE_QUERY = defineQuery(`{
     "fig": [
       coalesce(indexFigLabel[language == $lang][0].value, indexFigLabel[language == "nl"][0].value, ""),
       coalesce(indexFigCorner, "")
-    ]
+    ],
+    "image": indexImage->{
+      "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, ""),
+      "asset": image.asset->{ _id, url, metadata{ lqip, dimensions{ width, height } } },
+      "hotspot": image.hotspot,
+      "crop": image.crop
+    }
   }
 }`);
 

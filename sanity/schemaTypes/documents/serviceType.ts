@@ -286,6 +286,13 @@ export const serviceType = defineType({
             }),
           ],
         }),
+        defineField({
+          name: "galleryImage",
+          title: "Galerij-scan (kader D)",
+          description: "Optionele extra foto uit de bibliotheek voor het vierde galerijkader.",
+          type: "reference",
+          to: [{ type: "photo" }],
+        }),
       ],
     }),
     defineField({ name: "seo", title: "SEO", type: "seo", group: "seo" }),

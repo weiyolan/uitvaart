@@ -47,6 +47,13 @@ export const homePageType = defineType({
         defineField({ name: "lead", title: "Inleiding", type: "internationalizedArrayText" }),
         defineField({ name: "body", title: "Tekst", type: "internationalizedArrayText" }),
         defineField({ name: "indexOverline", title: "Diensten-overline", type: "internationalizedArrayString" }),
+        defineField({
+          name: "portrait",
+          title: "Portret-scan",
+          description: "Optionele foto uit de bibliotheek voor het fotograaf-kader. Placeholder tot er één gekozen is.",
+          type: "reference",
+          to: [{ type: "photo" }],
+        }),
       ],
     }),
     defineField({
