@@ -25,6 +25,8 @@ npm run build
 
 After editing GROQ in `sanity/lib/queries.ts` or any schema, run `npm run typegen` and commit `sanity/types.ts`.
 
+**Localized field shape (plugin v5):** the locale is stored on a dedicated `language` field, not `_key` (v4 stored it on `_key`). So queries filter with `field[language == $lang][0].value` and the seed writes `{ _key, _type: "internationalizedArray…Value", language, value }`. If you ever see a "migrate from v4 to v5" banner in the Studio, it means some values lack the `language` field — re-running `npm run seed` rewrites them in the v5 shape.
+
 ## Environment
 
 `.env.local` (see `.env.example`):

@@ -52,3 +52,7 @@ schema.json
 
 # old studio reference (not part of the app)
 sanityExample/
+
+# sanity studio build output
+/dist
+/.sanity
