@@ -1,7 +1,6 @@
 "use client";
 
 import type { Locale } from "@/lib/i18n";
-import { lpScrollTo } from "@/lib/utils";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { LangSwitch } from "@/components/shared/LangSwitch";
 
@@ -18,7 +17,7 @@ export function TopBar({
 }) {
   return (
     <div className="lp-top">
-      <a className="lp-mark" href="#top" onClick={lpScrollTo("top")}>
+      <a className="lp-mark" href="#top">
         Milo Weiler
       </a>
       <span className="nav-controls">

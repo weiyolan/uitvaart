@@ -1,7 +1,6 @@
 "use client";
 
 import type { SiteContent } from "@/lib/site-types";
-import { lpScrollTo } from "@/lib/utils";
 import { Overline } from "@/components/shared/Overline";
 import { Reveal } from "@/components/shared/Reveal";
 import { RevealWords } from "@/components/shared/RevealWords";
@@ -22,7 +21,7 @@ export function Closing({ c }: { c: SiteContent }) {
           {x.sub}
         </Reveal>
         <Reveal as="div" className="closing-cta">
-          <a className="btn" href="#contact" onClick={lpScrollTo("contact")}>
+          <a className="btn" href="#contact">
             {c.hero.cta}
             <span aria-hidden="true">→</span>
           </a>
