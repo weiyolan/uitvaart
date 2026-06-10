@@ -1,6 +1,6 @@
 "use client";
 
-import type { ServicePage } from "@/lib/content-pages";
+import type { ServicePage } from "@/lib/site-types";
 import { Reveal } from "@/components/shared/Reveal";
 import { SectionHead } from "@/components/shared/SectionHead";
 

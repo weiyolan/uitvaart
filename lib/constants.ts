@@ -25,14 +25,6 @@ export const LP_THEME_LABEL: Record<Lang, string> = {
   fr: "Clair / sombre",
 };
 
-/* Service id -> dedicated service-page route.
-   (The prototype linked to standalone .html files; in the app these are routes.) */
-export const LP_SERVICE_FILES: Record<string, string> = {
-  uitvaart: "/diensten/uitvaart",
-  portret: "/diensten/portret",
-  huwelijk: "/diensten/huwelijk",
-};
-
 /* Extra service-page labels (gallery head, cross-link head, package badge + CTA)
    that aren't in the shared MW content — from service-page.jsx SP_LABELS.
    Passed as explicit props (the prototype mutated these onto the MW singleton). */

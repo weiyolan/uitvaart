@@ -1,6 +1,6 @@
 "use client";
 
-import type { SiteContent } from "@/lib/content";
+import type { SiteContent } from "@/lib/site-types";
 import { Overline } from "@/components/shared/Overline";
 import { Reveal } from "@/components/shared/Reveal";
 import { RevealWords } from "@/components/shared/RevealWords";

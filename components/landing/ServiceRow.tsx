@@ -1,18 +1,28 @@
 "use client";
 
-import type { Service, Lang } from "@/lib/content";
-import { LP_SVC_CTA, LP_SERVICE_FILES } from "@/lib/constants";
+import type { Locale } from "@/lib/i18n";
+import type { ServiceItem } from "@/lib/site-types";
+import { servicePath } from "@/lib/routes";
 import { Reveal } from "@/components/shared/Reveal";
 import { RevealWords } from "@/components/shared/RevealWords";
 import { FilmFrame } from "@/components/shared/FilmFrame";
 
 /* SERVICE ROW — text/photo alternation (KOSUKE/MINTA). */
-export function ServiceRow({ data, idx, lang }: { data: Service; idx: number; lang: Lang }) {
+export function ServiceRow({
+  data,
+  idx,
+  lang,
+  cta,
+}: {
+  data: ServiceItem;
+  idx: number;
+  lang: Locale;
+  cta: string;
+}) {
   const rev = idx % 2 === 1;
-  const cta = LP_SVC_CTA[lang] || LP_SVC_CTA.nl;
-  const href = LP_SERVICE_FILES[data.id] || "#traject";
+  const href = servicePath(lang, data.key);
   return (
-    <section className="lp-svc wrap" id={data.id} data-rev={rev ? "1" : "0"}>
+    <section className="lp-svc wrap" id={data.key} data-rev={rev ? "1" : "0"}>
       <div className="lp-svc-grid">
         <div className="lp-svc-text">
           <Reveal as="div" className="lp-svc-num">
@@ -28,7 +38,7 @@ export function ServiceRow({ data, idx, lang }: { data: Service; idx: number; la
             {data.specs.slice(0, 4).map((s, i) => (
               <li key={i}>
                 <span className="ix">{String(i + 1).padStart(2, "0")}</span>
-                <span>{s}</span>
+                <span>{s.value}</span>
               </li>
             ))}
           </Reveal>
@@ -43,9 +53,10 @@ export function ServiceRow({ data, idx, lang }: { data: Service; idx: number; la
           <FilmFrame
             className="frame--light"
             style={{ width: "100%", height: "100%" }}
-            tag={data.figures[0].tag}
-            meta={data.figures[0].meta}
-            corner={data.figures[0].corner}
+            tag={data.figures[0]?.tag}
+            meta={data.figures[0]?.meta}
+            corner={data.figures[0]?.corner}
+            image={data.figures[0]?.image}
           />
           <span className="lp-svc-result">
             <span className="k">{data.result[0]}</span>

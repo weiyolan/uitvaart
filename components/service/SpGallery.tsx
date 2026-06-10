@@ -1,7 +1,6 @@
 "use client";
 
-import type { ServicePage } from "@/lib/content-pages";
-import type { SpGalleryLabels } from "@/lib/constants";
+import type { ServicePage, SpGalleryLabels } from "@/lib/site-types";
 import { Reveal } from "@/components/shared/Reveal";
 import { SectionHead } from "@/components/shared/SectionHead";
 import { FilmFrame } from "@/components/shared/FilmFrame";
@@ -9,9 +8,9 @@ import { FilmFrame } from "@/components/shared/FilmFrame";
 /* GALLERY — 4 film frames built from the service's existing figures. */
 export function SpGallery({ page, labels }: { page: ServicePage; labels: SpGalleryLabels }) {
   const frames = [
-    { stock: page.head.fig.tag, meta: page.nav.why, corner: "6×7 · A", cls: "sp-g1" },
-    { stock: page.why.fig.tag, meta: page.crumb, corner: "6×7 · B", cls: "sp-g2" },
-    { stock: page.piece.fig.tag, meta: page.nav.piece, corner: "6×7 · C", cls: "sp-g3" },
+    { stock: page.head.fig?.tag, meta: page.nav.why, corner: "6×7 · A", cls: "sp-g1" },
+    { stock: page.why.fig?.tag, meta: page.crumb, corner: "6×7 · B", cls: "sp-g2" },
+    { stock: page.piece.fig?.tag, meta: page.nav.piece, corner: "6×7 · C", cls: "sp-g3" },
     { stock: page.how.steps[1] ? "Kodak Portra 400" : "Ilford HP5+", meta: "Sfeer", corner: "6×7 · D", cls: "sp-g4" },
   ];
   return (

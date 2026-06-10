@@ -1,40 +1,38 @@
 "use client";
 
 import Link from "next/link";
-import type { Lang } from "@/lib/content";
-import { LANGS } from "@/lib/content";
-import type { ServicePage } from "@/lib/content-pages";
-import { LP_THEME_LABEL } from "@/lib/constants";
+import type { Locale } from "@/lib/i18n";
+import { homePath } from "@/lib/routes";
 import { ThemeToggle } from "@/components/shared/ThemeToggle";
 import { LangSwitch } from "@/components/shared/LangSwitch";
 
 export function SpTop({
-  page,
   lang,
-  setLang,
+  back,
+  themeLabel,
   theme,
   onToggleTheme,
 }: {
-  page: ServicePage;
-  lang: Lang;
-  setLang: (l: Lang) => void;
+  lang: Locale;
+  back: string;
+  themeLabel: string;
   theme: string;
   onToggleTheme: () => void;
 }) {
   return (
     <div className="sp-top">
-      <Link className="sp-back" href="/">
+      <Link className="sp-back" href={homePath(lang)}>
         <span className="ar" aria-hidden="true">
           ←
         </span>
-        {page.back}
+        {back}
       </Link>
-      <Link className="sp-top-mark" href="/">
+      <Link className="sp-top-mark" href={homePath(lang)}>
         Milo Weiler
       </Link>
       <span className="nav-controls">
-        <ThemeToggle theme={theme} onToggle={onToggleTheme} label={LP_THEME_LABEL[lang] || LP_THEME_LABEL.nl} />
-        <LangSwitch lang={lang} setLang={setLang} langs={LANGS} />
+        <ThemeToggle theme={theme} onToggle={onToggleTheme} label={themeLabel} />
+        <LangSwitch lang={lang} />
       </span>
     </div>
   );

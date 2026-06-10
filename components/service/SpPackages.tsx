@@ -1,6 +1,6 @@
 "use client";
 
-import type { ServicePage } from "@/lib/content-pages";
+import type { ServicePage } from "@/lib/site-types";
 import { Reveal } from "@/components/shared/Reveal";
 import { SectionHead } from "@/components/shared/SectionHead";
 
@@ -26,7 +26,7 @@ export function SpPackages({
               <p className="sp-card-tagline">{it.tagline}</p>
               <ul className="sp-card-inc">
                 {it.includes.map((inc, k) => (
-                  <li key={k}>{inc}</li>
+                  <li key={k}>{inc.value}</li>
                 ))}
               </ul>
               <div className="sp-card-foot">

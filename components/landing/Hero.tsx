@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { SiteContent } from "@/lib/content";
+import type { SiteContent } from "@/lib/site-types";
 import { Overline } from "@/components/shared/Overline";
 import { Kinetic } from "./Kinetic";
 
