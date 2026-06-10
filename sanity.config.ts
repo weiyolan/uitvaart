@@ -43,6 +43,9 @@ export default defineConfig({
       // "Filtered languages" control on these document types.
       languageFilter: {
         documentTypes: ["service", "homePage", "siteSettings", "photo"],
+        // Default-visible language(s): only nl shows by default; en/fr collapse
+        // behind the "Filter languages" control until the editor reveals them.
+        defaultLanguages: ["nl"],
       },
     }),
   ],

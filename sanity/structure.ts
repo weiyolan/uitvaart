@@ -1,6 +1,7 @@
 import type { StructureResolver } from "sanity/structure";
-import { CogIcon, HomeIcon, ImagesIcon } from "@sanity/icons";
+import { CogIcon, HomeIcon, ImagesIcon, ThLargeIcon } from "@sanity/icons";
 import { PhotoLibraryPane } from "./components/PhotoLibraryPane";
+import { BeeldenOverviewPane } from "./components/BeeldenOverviewPane";
 
 /* Pinned singletons + the three services in fixed order. All other types
    (including any legacy ones in the dataset) stay hidden. */
@@ -36,6 +37,10 @@ export const structure: StructureResolver = (S) =>
                 ["create", "edit"].includes(intent) && params?.type === "photo",
             ),
         ),
+      S.listItem()
+        .title("Beelden")
+        .icon(ThLargeIcon)
+        .child(S.component(BeeldenOverviewPane).id("beeldenOverview").title("Beelden")),
       S.listItem()
         .title("Site-instellingen")
         .icon(CogIcon)

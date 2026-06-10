@@ -38,12 +38,14 @@ export const filmFigureType = defineType({
     }),
   ],
   preview: {
-    select: { tag: "tag", corner: "corner", meta: "meta" },
-    prepare({ tag, corner, meta }) {
+    // `image.image` follows the photo reference to the photo's image field, so
+    // the chosen scan shows as the array-item thumbnail; ImageIcon when empty.
+    select: { tag: "tag", corner: "corner", meta: "meta", photo: "image.image" },
+    prepare({ tag, corner, meta, photo }) {
       return {
         title: tag || "Film frame",
         subtitle: [nlValue(meta), corner].filter(Boolean).join(" — "),
-        media: ImageIcon,
+        media: photo || ImageIcon,
       };
     },
   },
