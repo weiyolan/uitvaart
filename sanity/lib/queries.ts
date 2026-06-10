@@ -120,22 +120,6 @@ export const HOME_QUERY = defineQuery(`{
         "text": coalesce(text[language == $lang][0].value, text[language == "nl"][0].value, "")
       }, [])
     },
-    "work": {
-      "overline": coalesce(work.overline[language == $lang][0].value, work.overline[language == "nl"][0].value, ""),
-      "title": coalesce(work.title[language == $lang][0].value, work.title[language == "nl"][0].value, ""),
-      "note": coalesce(work.note[language == $lang][0].value, work.note[language == "nl"][0].value, ""),
-      "frames": coalesce(work.frames[]{
-        "stock": coalesce(tag, ""),
-        "meta": coalesce(meta[language == $lang][0].value, meta[language == "nl"][0].value, ""),
-        "corner": coalesce(corner, ""),
-        "image": image->{
-          "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, ""),
-          "asset": image.asset->{ _id, url, metadata{ lqip, dimensions{ width, height } } },
-          "hotspot": image.hotspot,
-          "crop": image.crop
-        }
-      }, [])
-    },
     "closing": {
       "overline": coalesce(closing.overline[language == $lang][0].value, closing.overline[language == "nl"][0].value, ""),
       "statement": coalesce(closing.statement[language == $lang][0].value, closing.statement[language == "nl"][0].value, ""),

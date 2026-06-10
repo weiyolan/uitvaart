@@ -43,7 +43,6 @@ export function LandingApp({
     },
     services,
     process: home.process,
-    work: home.work,
     closing: home.closing,
     contact: settings.contact,
     foot: settings.foot,
