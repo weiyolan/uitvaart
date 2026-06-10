@@ -46,7 +46,9 @@ export const photoType = defineType({
   preview: {
     select: { title: "title", alt: "alt", media: "image" },
     prepare({ title, alt, media }) {
-      return { title: title || nlValue(alt) || "Foto", media };
+      const nl = nlValue(alt);
+      // subtitle is auto-ellipsised by Studio on overflow (reference picker, search).
+      return { title: title || nl || "Foto", subtitle: nl, media };
     },
   },
 });
