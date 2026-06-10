@@ -32,34 +32,18 @@ export const filmFigureType = defineType({
     defineField({
       name: "image",
       title: "Scan",
-      description: "Optional real photograph. The placeholder is shown until one is uploaded.",
-      type: "image",
-      options: { hotspot: true },
-      fields: [
-        defineField({
-          name: "alt",
-          title: "Alternative text",
-          description: "Describe the photograph for search engines and screen readers.",
-          type: "internationalizedArrayString",
-          validation: (rule) =>
-            rule.custom((alt, context) => {
-              const parent = context.parent as { asset?: unknown } | undefined;
-              if (parent?.asset && !nlValue(alt)) {
-                return "Alt text is required when a scan is uploaded (important for SEO).";
-              }
-              return true;
-            }),
-        }),
-      ],
+      description: "Optional photograph from the library. The placeholder is shown until one is chosen.",
+      type: "reference",
+      to: [{ type: "photo" }],
     }),
   ],
   preview: {
-    select: { tag: "tag", corner: "corner", meta: "meta", media: "image" },
-    prepare({ tag, corner, meta, media }) {
+    select: { tag: "tag", corner: "corner", meta: "meta" },
+    prepare({ tag, corner, meta }) {
       return {
         title: tag || "Film frame",
         subtitle: [nlValue(meta), corner].filter(Boolean).join(" — "),
-        media,
+        media: ImageIcon,
       };
     },
   },

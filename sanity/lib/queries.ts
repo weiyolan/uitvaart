@@ -122,11 +122,11 @@ export const HOME_QUERY = defineQuery(`{
         "stock": coalesce(tag, ""),
         "meta": coalesce(meta[language == $lang][0].value, meta[language == "nl"][0].value, ""),
         "corner": coalesce(corner, ""),
-        image{
-          asset->{ _id, url, metadata{ lqip, dimensions{ width, height } } },
-          hotspot,
-          crop,
-          "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, "")
+        "image": image->{
+          "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, ""),
+          "asset": image.asset->{ _id, url, metadata{ lqip, dimensions{ width, height } } },
+          "hotspot": image.hotspot,
+          "crop": image.crop
         }
       }, [])
     },
@@ -165,11 +165,11 @@ export const HOME_QUERY = defineQuery(`{
       "tag": coalesce(tag, ""),
       "meta": coalesce(meta[language == $lang][0].value, meta[language == "nl"][0].value, ""),
       "corner": coalesce(corner, ""),
-      image{
-        asset->{ _id, url, metadata{ lqip, dimensions{ width, height } } },
-        hotspot,
-        crop,
-        "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, "")
+      "image": image->{
+        "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, ""),
+        "asset": image.asset->{ _id, url, metadata{ lqip, dimensions{ width, height } } },
+        "hotspot": image.hotspot,
+        "crop": image.crop
       }
     }, [])
   }
@@ -255,11 +255,11 @@ export const SERVICE_QUERY = defineQuery(`{
         "tag": coalesce(tag, ""),
         "meta": coalesce(meta[language == $lang][0].value, meta[language == "nl"][0].value, ""),
         "corner": coalesce(corner, ""),
-        image{
-          asset->{ _id, url, metadata{ lqip, dimensions{ width, height } } },
-          hotspot,
-          crop,
-          "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, "")
+        "image": image->{
+          "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, ""),
+          "asset": image.asset->{ _id, url, metadata{ lqip, dimensions{ width, height } } },
+          "hotspot": image.hotspot,
+          "crop": image.crop
         }
       }
     },
@@ -274,11 +274,11 @@ export const SERVICE_QUERY = defineQuery(`{
         "tag": coalesce(tag, ""),
         "meta": coalesce(meta[language == $lang][0].value, meta[language == "nl"][0].value, ""),
         "corner": coalesce(corner, ""),
-        image{
-          asset->{ _id, url, metadata{ lqip, dimensions{ width, height } } },
-          hotspot,
-          crop,
-          "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, "")
+        "image": image->{
+          "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, ""),
+          "asset": image.asset->{ _id, url, metadata{ lqip, dimensions{ width, height } } },
+          "hotspot": image.hotspot,
+          "crop": image.crop
         }
       }
     },
@@ -307,11 +307,11 @@ export const SERVICE_QUERY = defineQuery(`{
         "tag": coalesce(tag, ""),
         "meta": coalesce(meta[language == $lang][0].value, meta[language == "nl"][0].value, ""),
         "corner": coalesce(corner, ""),
-        image{
-          asset->{ _id, url, metadata{ lqip, dimensions{ width, height } } },
-          hotspot,
-          crop,
-          "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, "")
+        "image": image->{
+          "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, ""),
+          "asset": image.asset->{ _id, url, metadata{ lqip, dimensions{ width, height } } },
+          "hotspot": image.hotspot,
+          "crop": image.crop
         }
       }
     },
@@ -368,8 +368,8 @@ export const SETTINGS_SEO_QUERY = defineQuery(`*[_type == "siteSettings"][0]{
   "siteName": coalesce(business.siteName, "Milo Weiler"),
   "title": coalesce(seo.metaTitle[language == $lang][0].value, seo.metaTitle[language == "nl"][0].value, "Milo Weiler"),
   "description": coalesce(seo.metaDescription[language == $lang][0].value, seo.metaDescription[language == "nl"][0].value, ""),
-  "ogImage": seo.ogImage{
-    "url": asset->url,
+  "ogImage": seo.ogImage->{
+    "url": image.asset->url,
     "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, "")
   },
   "noIndex": seo.noIndex == true
@@ -391,12 +391,12 @@ export const HOME_SEO_QUERY = defineQuery(`*[_type == "homePage"][0]{
     ""
   ),
   "ogImage": coalesce(
-    seo.ogImage{
-      "url": asset->url,
+    seo.ogImage->{
+      "url": image.asset->url,
       "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, "")
     },
-    *[_type == "siteSettings"][0].seo.ogImage{
-      "url": asset->url,
+    *[_type == "siteSettings"][0].seo.ogImage->{
+      "url": image.asset->url,
       "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, "")
     }
   ),
@@ -417,12 +417,12 @@ export const SERVICE_SEO_QUERY = defineQuery(`*[_type == "service" && slug.curre
     ""
   ),
   "ogImage": coalesce(
-    seo.ogImage{
-      "url": asset->url,
+    seo.ogImage->{
+      "url": image.asset->url,
       "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, "")
     },
-    *[_type == "siteSettings"][0].seo.ogImage{
-      "url": asset->url,
+    *[_type == "siteSettings"][0].seo.ogImage->{
+      "url": image.asset->url,
       "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, "")
     }
   ),

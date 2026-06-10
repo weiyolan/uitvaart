@@ -24,16 +24,9 @@ export const seoType = defineType({
     defineField({
       name: "ogImage",
       title: "Social share image",
-      description: "1200×630 recommended. Used for Open Graph / link previews.",
-      type: "image",
-      options: { hotspot: true },
-      fields: [
-        defineField({
-          name: "alt",
-          title: "Alternative text",
-          type: "internationalizedArrayString",
-        }),
-      ],
+      description: "Pick a photo from the library. 1200×630 works best for link previews.",
+      type: "reference",
+      to: [{ type: "photo" }],
     }),
     defineField({
       name: "noIndex",
