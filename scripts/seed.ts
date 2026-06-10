@@ -35,15 +35,16 @@ const client = createClient({
 });
 
 /* ---- internationalized-array helpers -------------------------------- */
-/* Storage shape required by sanity-plugin-internationalized-array:
-   [{ _key: "<locale id>", _type: "internationalizedArray<Type>Value", value }] */
+/* Storage shape required by sanity-plugin-internationalized-array v5:
+   the locale lives on a dedicated `language` field (v4 stored it on `_key`).
+   `_key` is kept equal to the locale only for deterministic/idempotent seeds. */
 
 const i18nString = (pick: (l: Lang) => string | undefined) =>
   LOCALE_IDS.flatMap((l) => {
     const value = pick(l);
     return value === undefined
       ? []
-      : [{ _key: l, _type: "internationalizedArrayStringValue", value }];
+      : [{ _key: l, _type: "internationalizedArrayStringValue", language: l, value }];
   });
 
 const i18nText = (pick: (l: Lang) => string | undefined) =>
@@ -51,7 +52,7 @@ const i18nText = (pick: (l: Lang) => string | undefined) =>
     const value = pick(l);
     return value === undefined
       ? []
-      : [{ _key: l, _type: "internationalizedArrayTextValue", value }];
+      : [{ _key: l, _type: "internationalizedArrayTextValue", language: l, value }];
   });
 
 const localizedItems = (key: string, count: number, pick: (l: Lang, i: number) => string | undefined) =>
