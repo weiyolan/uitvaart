@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { RefObject } from "react";
+import { useLenis } from "lenis/react";
 
 /* ------------------------------------------------------------------
    useInView — adds reveal state once the element scrolls into view.
@@ -129,13 +130,12 @@ export function useReducedMotion(): boolean {
    components.jsx). Respects reduced-motion and <html data-motion="off">.
    ------------------------------------------------------------------ */
 export function useParallax(ref: RefObject<HTMLElement | null>, amount = 60): void {
+  const lenis = useLenis();
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    let ticking = false;
     const update = () => {
-      ticking = false;
       if (document.documentElement.getAttribute("data-motion") === "off") {
         el.style.setProperty("--py", "0px");
         return;
@@ -147,18 +147,15 @@ export function useParallax(ref: RefObject<HTMLElement | null>, amount = 60): vo
       const y = Math.max(-1, Math.min(1, p)) * amount;
       el.style.setProperty("--py", `${y.toFixed(1)}px`);
     };
-    const onScroll = () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(update);
-      }
-    };
+    // Update inside Lenis's scroll emission (same frame as the scroll position
+    // step) so the parallax can't trail the smoothed scroll; fall back to an
+    // initial run + resize.
     update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
+    window.addEventListener("resize", update, { passive: true });
+    lenis?.on("scroll", update);
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("resize", update);
+      lenis?.off("scroll", update);
     };
-  }, [ref, amount]);
+  }, [ref, amount, lenis]);
 }

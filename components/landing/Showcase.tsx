@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useLenis } from "lenis/react";
 import type { SiteContent } from "@/lib/site-types";
 import { Overline } from "@/components/shared/Overline";
 import { FilmFrame } from "@/components/shared/FilmFrame";
@@ -13,34 +14,30 @@ export function Showcase({ c, head }: { c: SiteContent; head: string }) {
   const secRef = useRef<HTMLElement>(null);
   const stickyRef = useRef<HTMLDivElement>(null);
   const svc = c.philosophy.services; // [uitvaart, portret, huwelijk]
+  const lenis = useLenis();
 
   useEffect(() => {
     const section = secRef.current;
     const sticky = stickyRef.current;
     if (!section || !sticky) return;
-    let ticking = false;
     const update = () => {
-      ticking = false;
       const total = section.offsetHeight - window.innerHeight;
       const passed = -section.getBoundingClientRect().top;
       let p = total > 0 ? passed / total : 0;
       p = Math.max(0, Math.min(1, p));
       sticky.style.setProperty("--p", p.toFixed(4));
     };
-    const onScroll = () => {
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(update);
-      }
-    };
+    // Driven by Lenis's scroll emission so the cocoon scale stays locked to the
+    // smoothed scroll position (no one-frame trailing); falls back to an
+    // initial run + resize.
     update();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
+    window.addEventListener("resize", update, { passive: true });
+    lenis?.on("scroll", update);
     return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
+      window.removeEventListener("resize", update);
+      lenis?.off("scroll", update);
     };
-  }, []);
+  }, [lenis]);
 
   // The showcase composition assumes the three services; bail safely if a
   // dataset is incomplete rather than crashing the whole landing page.
