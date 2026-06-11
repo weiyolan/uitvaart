@@ -49,7 +49,7 @@ export function SpClosing({
             {others.map((s) => (
               <Reveal as="a" key={s.key} className="sp-cross-card" href={servicePath(lang, s.key)}>
                 <span className="sp-cross-fig">
-                  <FilmFrame className="frame--light" tag={s.fig[0]} corner={s.fig[1]} />
+                  <FilmFrame className="frame--light" tag={s.fig[0]} corner={s.fig[1]} image={s.image} />
                 </span>
                 <span>
                   <span className="sp-cross-no">{s.no}</span>

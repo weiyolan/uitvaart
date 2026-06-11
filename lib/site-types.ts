@@ -33,7 +33,6 @@ export type SiteContent = {
   };
   services: ServiceItem[];
   process: HomeDoc["process"];
-  work: HomeDoc["work"];
   closing: HomeDoc["closing"];
   contact: SiteContact;
   foot: SiteFoot;

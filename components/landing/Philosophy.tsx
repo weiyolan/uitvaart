@@ -19,7 +19,7 @@ export function Philosophy({ c }: { c: SiteContent }) {
       </p>
       <div className="lp-philo-grid">
         <Reveal className="lp-philo-fig">
-          <FilmFrame className="frame--light" style={{ width: "100%", height: "100%" }} tag={m.name} meta="Middenformaat 6×7" corner="6×7" />
+          <FilmFrame className="frame--light" style={{ width: "100%", height: "100%" }} tag={m.name} meta="Middenformaat 6×7" corner="6×7" image={m.portrait} />
         </Reveal>
         <div className="lp-philo-body">
           <Reveal as="p">{m.body}</Reveal>

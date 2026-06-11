@@ -6,6 +6,7 @@ import { VisualEditing } from "next-sanity/visual-editing";
 import { SanityLive, sanityFetch } from "@/sanity/lib/live";
 import { SETTINGS_SEO_QUERY } from "@/sanity/lib/queries";
 import { LOCALE_IDS, isLocale } from "@/lib/i18n";
+import { SmoothScroll } from "@/components/shared/SmoothScroll";
 import "../../globals.css";
 
 const ebGaramond = EB_Garamond({
@@ -51,7 +52,7 @@ export default async function RootLayout({ children, params }: LayoutProps) {
     <html lang={lang} data-motion="on" className={ebGaramond.variable} suppressHydrationWarning>
       <body>
         <script dangerouslySetInnerHTML={{ __html: NO_FLASH_THEME }} />
-        {children}
+        <SmoothScroll>{children}</SmoothScroll>
         <SanityLive />
         {(await draftMode()).isEnabled && <VisualEditing />}
       </body>

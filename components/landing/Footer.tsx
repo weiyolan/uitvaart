@@ -3,7 +3,6 @@
 import type { Locale } from "@/lib/i18n";
 import type { BusinessInfo, SiteContent } from "@/lib/site-types";
 import { servicePath } from "@/lib/routes";
-import { lpScrollTo } from "@/lib/utils";
 
 export function Footer({ lang, c, business }: { lang: Locale; c: SiteContent; business: BusinessInfo }) {
   return (
@@ -26,7 +25,7 @@ export function Footer({ lang, c, business }: { lang: Locale; c: SiteContent; bu
               <a href={servicePath(lang, "uitvaart")}>{c.nav.uitvaart}</a>
               <a href={servicePath(lang, "portret")}>{c.nav.portret}</a>
               <a href={servicePath(lang, "huwelijk")}>{c.nav.huwelijk}</a>
-              <a href="#traject" onClick={lpScrollTo("traject")}>
+              <a href="#traject">
                 {c.process.overline.replace(/^[0-9]+ — /, "")}
               </a>
             </div>

@@ -1,5 +1,7 @@
 import type { StructureResolver } from "sanity/structure";
-import { CogIcon, HomeIcon, ImagesIcon } from "@sanity/icons";
+import { CogIcon, HomeIcon, ImagesIcon, ThLargeIcon } from "@sanity/icons";
+import { PhotoLibraryPane } from "./components/PhotoLibraryPane";
+import { BeeldenOverviewPane } from "./components/BeeldenOverviewPane";
 
 /* Pinned singletons + the three services in fixed order. All other types
    (including any legacy ones in the dataset) stay hidden. */
@@ -23,7 +25,22 @@ export const structure: StructureResolver = (S) =>
       S.listItem()
         .title("Beeldbibliotheek")
         .icon(ImagesIcon)
-        .child(S.documentTypeList("photo").title("Beeldbibliotheek")),
+        .child(
+          // Custom gallery pane (multi-upload, bulk select/delete). Clicking a
+          // tile resolves to the standard photo form via this child resolver.
+          S.component(PhotoLibraryPane)
+            .id("photoLibrary")
+            .title("Beeldbibliotheek")
+            .child((documentId) => S.document().documentId(documentId).schemaType("photo"))
+            .canHandleIntent(
+              (intent, params) =>
+                ["create", "edit"].includes(intent) && params?.type === "photo",
+            ),
+        ),
+      S.listItem()
+        .title("Beelden")
+        .icon(ThLargeIcon)
+        .child(S.component(BeeldenOverviewPane).id("beeldenOverview").title("Beelden")),
       S.listItem()
         .title("Site-instellingen")
         .icon(CogIcon)
