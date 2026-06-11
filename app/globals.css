@@ -1039,7 +1039,7 @@ html.force-reveal .arule,
 /* ============================================================
    PHILOSOPHY / ABOUT (COCOON — filosofie & fotograaf)
    ============================================================ */
-.lp-philo { padding: clamp(96px, 18vh, 220px) 0; }
+.lp-philo { padding-block: clamp(96px, 18vh, 220px); }
 .lp-philo-lead {
   font-family: var(--font-display); font-weight: 400;
   font-size: clamp(30px, 5vw, 74px); line-height: 1.08;
@@ -1066,7 +1066,7 @@ html.force-reveal .arule,
 /* ============================================================
    SERVICES — tekst/foto afwisseling (KOSUKE/MINTA)
    ============================================================ */
-.lp-svc { padding: clamp(70px, 12vh, 150px) 0; }
+.lp-svc { padding-block: clamp(70px, 12vh, 150px); }
 .lp-svc-grid {
   display: grid; grid-template-columns: 1fr 1fr;
   gap: clamp(34px, 5vw, 92px); align-items: center;
