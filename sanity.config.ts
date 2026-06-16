@@ -12,6 +12,23 @@ import { structure } from "./sanity/structure";
 import { resolve } from "./sanity/presentation/resolve";
 import { LOCALES } from "./lib/i18n";
 
+/* `@sanity/language-filter` (wired in by internationalized-array below) shows
+   EVERY non-pinned language by default — its `defaultLanguages` only PINS nl as
+   always-visible, it does not hide EN/FR. To get a Dutch-only default we seed the
+   plugin's persisted selection to "no extra languages" once per browser, so only
+   nl shows until an editor reveals EN/FR via the "Filter languages" funnel (their
+   choice then persists). The one-time marker means we reset stale "show all" state
+   exactly once, then leave the editor in control. Coupled to the plugin's
+   localStorage key (stable across the 5.x line). */
+if (typeof window !== "undefined") {
+  const LANG_FILTER_KEY = "@sanity/plugin/language-filter/selected-languages";
+  const SEEDED_MARKER = "studio/language-filter-default-seeded/v1";
+  if (!window.localStorage.getItem(SEEDED_MARKER)) {
+    window.localStorage.setItem(LANG_FILTER_KEY, "[]");
+    window.localStorage.setItem(SEEDED_MARKER, "1");
+  }
+}
+
 /* Types that are created/ordered by the seed + structure, not via the
    "new document" menu. */
 const LOCKED_TYPES = ["siteSettings", "homePage", "service"];
@@ -41,9 +58,10 @@ export default defineConfig({
       defaultLanguages: ["nl"],
       fieldTypes: ["string", "text"],
       // Built-in @sanity/language-filter integration (plugin v5+): no separate
-      // import needed. Only `nl` is shown by default on these document types;
-      // EN/FR fold behind the "Filter languages" funnel until an editor reveals
-      // them. The selection is remembered per user/browser.
+      // import needed. `documentTypes` enables the funnel on these types and
+      // `defaultLanguages` pins nl as always-visible. EN/FR are hidden on first
+      // load via the localStorage seed above (the plugin itself would otherwise
+      // show them); editors reveal EN/FR through the "Filter languages" funnel.
       languageFilter: {
         documentTypes: ["service", "homePage", "siteSettings", "photo"],
         defaultLanguages: ["nl"],
