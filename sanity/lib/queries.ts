@@ -150,18 +150,30 @@ export const HOME_QUERY = defineQuery(`{
       coalesce(landing.resultLabel[language == $lang][0].value, landing.resultLabel[language == "nl"][0].value, ""),
       coalesce(landing.resultValue[language == $lang][0].value, landing.resultValue[language == "nl"][0].value, "")
     ],
-    "figures": coalesce(landing.figures[]{
-      _key,
-      "tag": coalesce(tag, ""),
-      "meta": coalesce(meta[language == $lang][0].value, meta[language == "nl"][0].value, ""),
-      "corner": coalesce(corner, ""),
-      "image": image->{
-        "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, ""),
-        "asset": image.asset->{ _id, url, metadata{ lqip, dimensions{ width, height } } },
-        "hotspot": image.hotspot,
-        "crop": image.crop
+    "homeFrames": *[_type == "homePage"][0].showcase[service._ref == ^._id][0]{
+      "showcase": showcaseFigure{
+        "tag": coalesce(tag, ""),
+        "meta": coalesce(meta[language == $lang][0].value, meta[language == "nl"][0].value, ""),
+        "corner": coalesce(corner, ""),
+        "image": image->{
+          "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, ""),
+          "asset": image.asset->{ _id, url, metadata{ lqip, dimensions{ width, height } } },
+          "hotspot": image.hotspot,
+          "crop": image.crop
+        }
+      },
+      "row": rowFigure{
+        "tag": coalesce(tag, ""),
+        "meta": coalesce(meta[language == $lang][0].value, meta[language == "nl"][0].value, ""),
+        "corner": coalesce(corner, ""),
+        "image": image->{
+          "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, ""),
+          "asset": image.asset->{ _id, url, metadata{ lqip, dimensions{ width, height } } },
+          "hotspot": image.hotspot,
+          "crop": image.crop
+        }
       }
-    }, [])
+    }
   }
 }`);
 

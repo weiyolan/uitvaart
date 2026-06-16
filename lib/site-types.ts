@@ -19,7 +19,8 @@ export type SiteContact = SiteSettings["contact"];
 export type SiteContactLine = SiteContact["lines"][number];
 export type SiteFoot = SiteSettings["foot"];
 export type SiteNav = SiteSettings["nav"];
-export type Figure = ServiceItem["figures"][number];
+export type HomeFrames = NonNullable<ServiceItem["homeFrames"]>;
+export type Figure = NonNullable<HomeFrames["row"]>;
 
 /* The composed shape the landing components consume (assembled in
    LandingApp from the HOME_QUERY result). */

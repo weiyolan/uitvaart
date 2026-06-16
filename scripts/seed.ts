@@ -184,6 +184,18 @@ const homePage = {
     cue: i18nString((l) => MW[l].hero.cue),
     cta: i18nString((l) => MW[l].hero.cta),
   },
+  showcase: (["uitvaart", "portret", "huwelijk"] as const).map((slug, idx) => ({
+    _type: "homeServiceFrame",
+    _key: slug,
+    service: { _type: "reference", _ref: `service-${slug}` },
+    showcaseFigure: figure(`${slug}-showcase`, (l) => ({
+      tag: MW[l].philosophy.services[idx]?.fig[0] ?? "",
+      // The original showcase only labelled the centre frame with the tagline.
+      meta: idx === 0 ? (MW[l].philosophy.services[idx]?.note ?? "") : "",
+      corner: MW.nl.philosophy.services[idx]?.fig[1] ?? "",
+    })),
+    rowFigure: figure(`${slug}-row`, (l) => MW[l].services[idx].figures[0]),
+  })),
   philosophy: {
     overline: i18nString((l) => MW[l].philosophy.overline),
     pull: i18nText((l) => MW[l].philosophy.pull),
@@ -249,9 +261,6 @@ const serviceDocs = SLUGS.map((slug, idx) => {
       specs: localizedItems("spec", nlLanding.specs.length, (l, i) => MW[l].services[idx]?.specs[i]),
       resultLabel: i18nString((l) => MW[l].services[idx]?.result[0]),
       resultValue: i18nString((l) => MW[l].services[idx]?.result[1]),
-      figures: nlLanding.figures.map((_, i) =>
-        figure(`fig-${i + 1}`, (l) => MW[l].services[idx].figures[i]),
-      ),
     },
     page: {
       heroVariant: nlPage.hero,

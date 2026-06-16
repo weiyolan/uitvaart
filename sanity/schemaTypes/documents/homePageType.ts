@@ -1,5 +1,6 @@
 import { defineArrayMember, defineField, defineType } from "sanity";
-import { HomeIcon } from "@sanity/icons";
+import { HomeIcon, ImageIcon } from "@sanity/icons";
+import { nlValue } from "../utils";
 
 /* Singleton (_id: "homePage") — all sections of the landing page.
    The three service rows live on the service documents. */
@@ -10,6 +11,7 @@ export const homePageType = defineType({
   icon: HomeIcon,
   groups: [
     { name: "hero", title: "Hero", default: true },
+    { name: "showcase", title: "Showcase" },
     { name: "philosophy", title: "Filosofie" },
     { name: "process", title: "Traject" },
     { name: "closing", title: "Slot" },
@@ -28,6 +30,52 @@ export const homePageType = defineType({
         defineField({ name: "sub", title: "Subtekst", type: "internationalizedArrayText" }),
         defineField({ name: "cue", title: "Scroll-cue", type: "internationalizedArrayString" }),
         defineField({ name: "cta", title: "CTA-knop", type: "internationalizedArrayString" }),
+      ],
+    }),
+    defineField({
+      name: "showcase",
+      title: "Showcase-beelden",
+      description:
+        "De grote galerij bovenaan de homepagina én de afwisselende dienst-rijen. Eén item per dienst — onafhankelijk van de foto's op de dienstpagina's.",
+      type: "array",
+      group: "showcase",
+      validation: (rule) => rule.max(3),
+      of: [
+        defineArrayMember({
+          type: "object",
+          name: "homeServiceFrame",
+          title: "Dienst-beeld",
+          fields: [
+            defineField({
+              name: "service",
+              title: "Dienst",
+              description: "Welke dienst dit beeld voorstelt op de homepagina.",
+              type: "reference",
+              to: [{ type: "service" }],
+              validation: (rule) => rule.required(),
+            }),
+            defineField({
+              name: "showcaseFigure",
+              title: "Showcase-beeld (groot kader bovenaan)",
+              description: "Verschijnt in de grote galerij bovenaan de homepagina.",
+              type: "filmFigure",
+            }),
+            defineField({
+              name: "rowFigure",
+              title: "Dienst-rij-beeld",
+              description: "Verschijnt in de afwisselende dienst-rij verderop op de homepagina.",
+              type: "filmFigure",
+            }),
+          ],
+          preview: {
+            // `showcaseFigure.image.image` follows the photo reference to its image
+            // so the chosen scan shows as the array-item thumbnail.
+            select: { name: "service.name", media: "showcaseFigure.image.image" },
+            prepare({ name, media }) {
+              return { title: nlValue(name) || "Dienst-beeld", media: media || ImageIcon };
+            },
+          },
+        }),
       ],
     }),
     defineField({

@@ -53,10 +53,10 @@ export function ServiceRow({
           <FilmFrame
             className="frame--light"
             style={{ width: "100%", height: "100%" }}
-            tag={data.figures[0]?.tag}
-            meta={data.figures[0]?.meta}
-            corner={data.figures[0]?.corner}
-            image={data.figures[0]?.image}
+            tag={data.homeFrames?.row?.tag}
+            meta={data.homeFrames?.row?.meta}
+            corner={data.homeFrames?.row?.corner}
+            image={data.homeFrames?.row?.image}
           />
           <span className="lp-svc-result">
             <span className="k">{data.result[0]}</span>

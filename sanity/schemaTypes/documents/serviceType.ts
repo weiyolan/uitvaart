@@ -14,7 +14,7 @@ export const serviceType = defineType({
   icon: ImagesIcon,
   groups: [
     { name: "identity", title: "Identiteit", default: true },
-    { name: "landing", title: "Landingspagina" },
+    { name: "landing", title: "Homepagina-rij (tekst)" },
     { name: "page", title: "Dienstpagina" },
     { name: "seo", title: "SEO" },
   ],
@@ -95,7 +95,9 @@ export const serviceType = defineType({
     /* ---- Landing-page row ---- */
     defineField({
       name: "landing",
-      title: "Landingspagina-sectie",
+      title: "Homepagina-rij (tekst)",
+      description:
+        "De tekst van de dienst-rij op de homepagina. De bijhorende foto's worden beheerd op de Homepagina onder “Showcase”.",
       type: "object",
       group: "landing",
       fields: [
@@ -118,12 +120,6 @@ export const serviceType = defineType({
         }),
         defineField({ name: "resultLabel", title: "Resultaat: label", type: "internationalizedArrayString" }),
         defineField({ name: "resultValue", title: "Resultaat: waarde", type: "internationalizedArrayString" }),
-        defineField({
-          name: "figures",
-          title: "Beelden",
-          type: "array",
-          of: [defineArrayMember({ type: "filmFigure" })],
-        }),
       ],
     }),
 
@@ -301,7 +297,8 @@ export const serviceType = defineType({
         defineField({
           name: "galleryImage",
           title: "Galerij-scan (kader D)",
-          description: "Optionele extra foto uit de bibliotheek voor het vierde galerijkader.",
+          description:
+            "Optionele extra foto voor het vierde galerijkader. De kaders A/B/C hergebruiken de Hero-, Waarom- en “Het stuk”-scans hierboven.",
           type: "reference",
           to: [{ type: "photo" }],
         }),
