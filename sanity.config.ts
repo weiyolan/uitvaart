@@ -10,6 +10,7 @@ import { apiVersion, dataset, projectId } from "./sanity/env";
 import { schemaTypes } from "./sanity/schemaTypes";
 import { structure } from "./sanity/structure";
 import { resolve } from "./sanity/presentation/resolve";
+import { localeAwareInput } from "./sanity/components/LocaleArrayInput";
 import { LOCALES } from "./lib/i18n";
 
 /* Types that are created/ordered by the seed + structure, not via the
@@ -37,21 +38,24 @@ export default defineConfig({
     visionTool({ defaultApiVersion: apiVersion }),
     internationalizedArray({
       languages: [...LOCALES],
-      // Initial locale item created on new documents.
+      // Locale pre-filled on new documents; the others are added on demand.
       defaultLanguages: ["nl"],
       fieldTypes: ["string", "text"],
-      // Built-in @sanity/language-filter integration (plugin v5+): no separate
-      // import needed. Only `nl` is shown by default on these document types;
-      // EN/FR fold behind the "Filter languages" funnel until an editor reveals
-      // them. The selection is remembered per user/browser.
-      languageFilter: {
-        documentTypes: ["service", "homePage", "siteSettings", "photo"],
-        defaultLanguages: ["nl"],
-      },
+      // NB: no `languageFilter` here on purpose. The plugin's built-in
+      // @sanity/language-filter is a per-user, per-browser funnel that does not
+      // reliably hide EN/FR by default. We collapse them deterministically for
+      // every editor via the custom input registered in `form.components` below.
     }),
   ],
   schema: {
     types: schemaTypes,
+  },
+  form: {
+    components: {
+      // Localized fields show only Dutch by default; EN/FR fold behind a
+      // per-field toggle. See sanity/components/LocaleArrayInput.tsx.
+      input: localeAwareInput,
+    },
   },
   document: {
     newDocumentOptions: (prev) =>
