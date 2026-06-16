@@ -53,14 +53,14 @@ export function Showcase({ c, head }: { c: SiteContent; head: string }) {
 
           <div className="lp-show-row">
             <div className="lp-show-frame lp-show-left">
-              <FilmFrame className="frame--light" tag={svc[1].fig[0]} corner={svc[1].fig[1]} image={svc[1].figures[0]?.image} />
+              <FilmFrame className="frame--light" tag={svc[1].homeFrames?.showcase?.tag} meta={svc[1].homeFrames?.showcase?.meta} corner={svc[1].homeFrames?.showcase?.corner} image={svc[1].homeFrames?.showcase?.image} />
               <span className="lp-show-side-lab">{svc[1].name}</span>
             </div>
             <div className="lp-show-frame lp-show-center">
-              <FilmFrame className="frame--light" tag={svc[0].fig[0]} meta={svc[0].note} corner={svc[0].fig[1]} image={svc[0].figures[0]?.image} />
+              <FilmFrame className="frame--light" tag={svc[0].homeFrames?.showcase?.tag} meta={svc[0].homeFrames?.showcase?.meta} corner={svc[0].homeFrames?.showcase?.corner} image={svc[0].homeFrames?.showcase?.image} />
             </div>
             <div className="lp-show-frame lp-show-right">
-              <FilmFrame className="frame--light" tag={svc[2].fig[0]} corner={svc[2].fig[1]} image={svc[2].figures[0]?.image} />
+              <FilmFrame className="frame--light" tag={svc[2].homeFrames?.showcase?.tag} meta={svc[2].homeFrames?.showcase?.meta} corner={svc[2].homeFrames?.showcase?.corner} image={svc[2].homeFrames?.showcase?.image} />
               <span className="lp-show-side-lab">{svc[2].name}</span>
             </div>
           </div>
@@ -86,13 +86,13 @@ export function StaticShowcase({ c }: { c: SiteContent }) {
     <section className="lp-showcase" id="overzicht">
       <div className="lp-show-static">
         <div className="a">
-          <FilmFrame className="frame--light" style={{ width: "100%", height: "100%" }} tag={svc[1].fig[0]} corner={svc[1].fig[1]} image={svc[1].figures[0]?.image} />
+          <FilmFrame className="frame--light" style={{ width: "100%", height: "100%" }} tag={svc[1].homeFrames?.showcase?.tag} meta={svc[1].homeFrames?.showcase?.meta} corner={svc[1].homeFrames?.showcase?.corner} image={svc[1].homeFrames?.showcase?.image} />
         </div>
         <div className="b">
-          <FilmFrame className="frame--light" style={{ width: "100%", height: "100%" }} tag={svc[0].fig[0]} meta={svc[0].note} corner={svc[0].fig[1]} image={svc[0].figures[0]?.image} />
+          <FilmFrame className="frame--light" style={{ width: "100%", height: "100%" }} tag={svc[0].homeFrames?.showcase?.tag} meta={svc[0].homeFrames?.showcase?.meta} corner={svc[0].homeFrames?.showcase?.corner} image={svc[0].homeFrames?.showcase?.image} />
         </div>
         <div className="c">
-          <FilmFrame className="frame--light" style={{ width: "100%", height: "100%" }} tag={svc[2].fig[0]} corner={svc[2].fig[1]} image={svc[2].figures[0]?.image} />
+          <FilmFrame className="frame--light" style={{ width: "100%", height: "100%" }} tag={svc[2].homeFrames?.showcase?.tag} meta={svc[2].homeFrames?.showcase?.meta} corner={svc[2].homeFrames?.showcase?.corner} image={svc[2].homeFrames?.showcase?.image} />
         </div>
       </div>
     </section>
