@@ -18,6 +18,9 @@ export const serviceType = defineType({
     { name: "page", title: "Dienstpagina" },
     { name: "seo", title: "SEO" },
   ],
+  fieldsets: [
+    { name: "indexFrame", title: "Indexkader (homepagina)", options: { collapsible: true, collapsed: true } },
+  ],
   fields: [
     /* ---- Identity ---- */
     defineField({
@@ -69,6 +72,7 @@ export const serviceType = defineType({
       description: "Groot label in het kader, b.v. “UITVAART”.",
       type: "internationalizedArrayString",
       group: "identity",
+      fieldset: "indexFrame",
     }),
     defineField({
       name: "indexFigCorner",
@@ -76,6 +80,7 @@ export const serviceType = defineType({
       description: "b.v. “6×7 · I” — gedeeld over talen.",
       type: "string",
       group: "identity",
+      fieldset: "indexFrame",
     }),
     defineField({
       name: "indexImage",
@@ -84,6 +89,7 @@ export const serviceType = defineType({
       type: "reference",
       to: [{ type: "photo" }],
       group: "identity",
+      fieldset: "indexFrame",
     }),
 
     /* ---- Landing-page row ---- */
@@ -147,6 +153,7 @@ export const serviceType = defineType({
           name: "head",
           title: "Hero",
           type: "object",
+          options: { collapsible: true, collapsed: true },
           fields: [
             defineField({ name: "overline", title: "Overline", type: "internationalizedArrayString" }),
             defineField({ name: "titleLine1", title: "Titel — regel 1", type: "internationalizedArrayString" }),
@@ -159,6 +166,7 @@ export const serviceType = defineType({
           name: "why",
           title: "Waarom",
           type: "object",
+          options: { collapsible: true, collapsed: true },
           fields: [
             defineField({ name: "overline", title: "Overline", type: "internationalizedArrayString" }),
             defineField({ name: "lead", title: "Inleiding", type: "internationalizedArrayText" }),
@@ -181,6 +189,7 @@ export const serviceType = defineType({
           name: "how",
           title: "Werkwijze",
           type: "object",
+          options: { collapsible: true, collapsed: true },
           fields: [
             defineField({ name: "overline", title: "Overline", type: "internationalizedArrayString" }),
             defineField({ name: "title", title: "Titel", type: "internationalizedArrayString" }),
@@ -197,6 +206,7 @@ export const serviceType = defineType({
           name: "piece",
           title: "Het stuk",
           type: "object",
+          options: { collapsible: true, collapsed: true },
           fields: [
             defineField({ name: "overline", title: "Overline", type: "internationalizedArrayString" }),
             defineField({ name: "title", title: "Titel", type: "internationalizedArrayString" }),
@@ -216,6 +226,7 @@ export const serviceType = defineType({
           name: "packages",
           title: "Formules",
           type: "object",
+          options: { collapsible: true, collapsed: true },
           fields: [
             defineField({ name: "overline", title: "Overline", type: "internationalizedArrayString" }),
             defineField({ name: "title", title: "Titel", type: "internationalizedArrayString" }),
@@ -259,6 +270,7 @@ export const serviceType = defineType({
           name: "faq",
           title: "Vragen",
           type: "object",
+          options: { collapsible: true, collapsed: true },
           fields: [
             defineField({ name: "overline", title: "Overline", type: "internationalizedArrayString" }),
             defineField({ name: "title", title: "Titel", type: "internationalizedArrayString" }),
