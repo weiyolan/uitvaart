@@ -37,14 +37,15 @@ export default defineConfig({
     visionTool({ defaultApiVersion: apiVersion }),
     internationalizedArray({
       languages: [...LOCALES],
+      // Initial locale item created on new documents.
       defaultLanguages: ["nl"],
       fieldTypes: ["string", "text"],
-      // Collapse locale fields: only `nl` shows by default; EN/FR sit behind the
-      // "Filtered languages" control on these document types.
+      // Built-in @sanity/language-filter integration (plugin v5+): no separate
+      // import needed. Only `nl` is shown by default on these document types;
+      // EN/FR fold behind the "Filter languages" funnel until an editor reveals
+      // them. The selection is remembered per user/browser.
       languageFilter: {
         documentTypes: ["service", "homePage", "siteSettings", "photo"],
-        // Default-visible language(s): only nl shows by default; en/fr collapse
-        // behind the "Filter languages" control until the editor reveals them.
         defaultLanguages: ["nl"],
       },
     }),
