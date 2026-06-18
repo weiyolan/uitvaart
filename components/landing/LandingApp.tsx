@@ -1,7 +1,7 @@
 "use client";
 
 import type { Locale } from "@/lib/i18n";
-import type { HomeData, HomeDoc, ServiceItem, SiteContent, SiteSettings } from "@/lib/site-types";
+import type { HomeData, HomeDoc, SiteContent, SiteSettings } from "@/lib/site-types";
 import { useActiveSection } from "@/lib/hooks";
 import { useSiteChrome } from "@/lib/useSiteChrome";
 import { TopBar } from "./TopBar";
@@ -10,7 +10,7 @@ import type { RailItem } from "./RailNav";
 import { Hero } from "./Hero";
 import { Showcase, StaticShowcase } from "./Showcase";
 import { Philosophy } from "./Philosophy";
-import { ServiceRow } from "./ServiceRow";
+import { ServiceStack, StaticServiceStack } from "./ServiceStack";
 import { Process } from "./Process";
 import { Closing } from "./Closing";
 import { Contact } from "./Contact";
@@ -72,9 +72,11 @@ export function LandingApp({
         <Hero c={c} />
         {reduce ? <StaticShowcase c={c} /> : <Showcase c={c} head={ui.showcaseHeading} />}
         <Philosophy c={c} />
-        {c.services.map((s: ServiceItem, i: number) => (
-          <ServiceRow key={s.key} data={s} idx={i} lang={lang} cta={ui.serviceCta} />
-        ))}
+        {reduce ? (
+          <StaticServiceStack services={c.services} lang={lang} cta={ui.serviceCta} />
+        ) : (
+          <ServiceStack services={c.services} lang={lang} cta={ui.serviceCta} />
+        )}
         <Process c={c} />
         <Closing c={c} />
         <Contact c={c} />
