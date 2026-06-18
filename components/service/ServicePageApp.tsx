@@ -73,7 +73,14 @@ export function ServicePageApp({
           />
           <SpPackages page={page} ctaLabel={{ popular: ui.popular, ask: ui.ask }} />
           <SpFaq page={page} />
-          <SpClosing lang={lang} contact={settings.contact} others={others} crossLabel={ui.cross} />
+          <SpClosing
+            lang={lang}
+            contact={settings.contact}
+            formLabels={settings.contactForm}
+            svc={svc}
+            others={others}
+            crossLabel={ui.cross}
+          />
         </main>
         <SpFooter lang={lang} nav={settings.nav} foot={settings.foot} business={settings.business} />
       </div>

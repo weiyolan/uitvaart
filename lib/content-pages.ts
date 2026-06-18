@@ -9,7 +9,8 @@ export interface SpStep { no: string; name: string; text: string; }
 export interface SpHow { overline: string; title: string; note: string; steps: SpStep[]; }
 export interface SpPiece { overline: string; title: string; body: string; specs: string[]; result: [string, string]; fig: ServiceFigure; }
 export interface SpPackageItem { name: string; tagline: string; includes: string[]; featured?: boolean; }
-export interface SpPackages { overline: string; title: string; note: string; priceNote: string; items: SpPackageItem[]; }
+export interface SpPackageAddon { label: string; priceNote: string; }
+export interface SpPackages { overline: string; title: string; note: string; priceNote: string; items: SpPackageItem[]; koffietafelNote?: string; bookAddon?: SpPackageAddon; }
 export interface SpFaqItem { q: string; a: string; }
 export interface SpFaq { overline: string; title: string; items: SpFaqItem[]; }
 export interface ServicePage {
@@ -76,14 +77,23 @@ export const MW_PAGES: Record<Lang, Record<ServiceSlug, ServicePage>> = {
         fig: { tag: "Cinestill 800T", meta: "Detail · het album", corner: "6×7 · 03" },
       },
       packages: {
-        overline: "Formules",
-        title: "Drie manieren om af te ronden.",
-        note: "Elke uitvaart is anders. Onderstaande formules zijn een vertrekpunt — alles wordt op maat besproken.",
+        overline: "Formule",
+        title: "Eén formule, met zorg samengesteld.",
+        note: "Elke uitvaart is anders. Deze formule is het vertrekpunt — alles wordt op maat besproken, aan dezelfde prijs.",
         priceNote: "Op aanvraag",
+        koffietafelNote: "De koffietafel wordt niet gefotografeerd — dat moment hoort de familie toe.",
+        bookAddon: { label: "Gepersonaliseerd handgemaakt leren boek met Japans papier", priceNote: "+ 1000 €" },
         items: [
-          { name: "De Ceremonie", tagline: "De plechtigheid zelf.", includes: ["Reportage van de dienst", "Een handgebonden album", "Gedigitaliseerde beelden"] },
-          { name: "De Dag", tagline: "Van samenkomst tot afscheid.", includes: ["Volledige dagreportage", "Uitgebreid fine-art album", "Gedigitaliseerde beelden", "Drie fine-art prints"], featured: true },
-          { name: "Het Erfstuk", tagline: "Voor wie alles wil bewaren.", includes: ["Volledige dagreportage", "Premium album, groot formaat", "Volledige digitale collectie", "Set ingelijste prints"] },
+          {
+            name: "De Reportage",
+            tagline: "Van samenkomst tot afscheid.",
+            includes: [
+              "Reportage van de ceremonie en/of teraardebestelling",
+              "Een handgebonden fine-art album",
+              "De volledige gedigitaliseerde collectie",
+              "Een set fine-art prints",
+            ],
+          },
         ],
       },
       faq: {
@@ -277,13 +287,22 @@ export const MW_PAGES: Record<Lang, Record<ServiceSlug, ServicePage>> = {
         fig: { tag: "Cinestill 800T", meta: "Detail · the album", corner: "6×7 · 03" },
       },
       packages: {
-        overline: "Formulas", title: "Three ways to round it off.",
-        note: "Every funeral is different. The formulas below are a starting point — everything is discussed bespoke.",
+        overline: "Formula", title: "One formula, composed with care.",
+        note: "Every funeral is different. This formula is the starting point — everything is discussed bespoke, at the same price.",
         priceNote: "On request",
+        koffietafelNote: "The reception (koffietafel) is not photographed — that moment belongs to the family.",
+        bookAddon: { label: "Personalised handmade leather book with Japanese paper", priceNote: "+ €1000" },
         items: [
-          { name: "The Ceremony", tagline: "The service itself.", includes: ["Reportage of the service", "A hand-bound album", "Digitised images"] },
-          { name: "The Day", tagline: "From gathering to farewell.", includes: ["Full-day reportage", "Extended fine-art album", "Digitised images", "Three fine-art prints"], featured: true },
-          { name: "The Heirloom", tagline: "For those who wish to keep everything.", includes: ["Full-day reportage", "Premium large-format album", "Full digital collection", "Set of framed prints"] },
+          {
+            name: "The Reportage",
+            tagline: "From gathering to farewell.",
+            includes: [
+              "Reportage of the ceremony and/or burial",
+              "A hand-bound fine-art album",
+              "The full digitised collection",
+              "A set of fine-art prints",
+            ],
+          },
         ],
       },
       faq: {
@@ -448,13 +467,22 @@ export const MW_PAGES: Record<Lang, Record<ServiceSlug, ServicePage>> = {
         fig: { tag: "Cinestill 800T", meta: "Détail · l’album", corner: "6×7 · 03" },
       },
       packages: {
-        overline: "Formules", title: "Trois façons de conclure.",
-        note: "Chaque cérémonie est différente. Les formules ci-dessous sont un point de départ — tout se discute sur mesure.",
+        overline: "Formule", title: "Une formule, composée avec soin.",
+        note: "Chaque cérémonie est différente. Cette formule est le point de départ — tout se discute sur mesure, au même prix.",
         priceNote: "Sur demande",
+        koffietafelNote: "La réception (koffietafel) n’est pas photographiée — ce moment appartient à la famille.",
+        bookAddon: { label: "Livre en cuir fait main personnalisé, papier japonais", priceNote: "+ 1000 €" },
         items: [
-          { name: "La Cérémonie", tagline: "La cérémonie elle-même.", includes: ["Reportage de la cérémonie", "Un album relié à la main", "Images numérisées"] },
-          { name: "La Journée", tagline: "Du rassemblement à l’adieu.", includes: ["Reportage de la journée complète", "Album fine-art étendu", "Images numérisées", "Trois tirages fine-art"], featured: true },
-          { name: "L’Héritage", tagline: "Pour qui veut tout garder.", includes: ["Reportage de la journée complète", "Album premium, grand format", "Collection numérique complète", "Série de tirages encadrés"] },
+          {
+            name: "Le Reportage",
+            tagline: "Du rassemblement à l’adieu.",
+            includes: [
+              "Reportage de la cérémonie et/ou de la mise en terre",
+              "Un album fine-art relié à la main",
+              "La collection numérisée complète",
+              "Une série de tirages fine-art",
+            ],
+          },
         ],
       },
       faq: {

@@ -11,6 +11,7 @@ import { Hero } from "./Hero";
 import { Showcase, StaticShowcase } from "./Showcase";
 import { Philosophy } from "./Philosophy";
 import { ServiceStack, StaticServiceStack } from "./ServiceStack";
+import { LandingGallery } from "./LandingGallery";
 import { Process } from "./Process";
 import { Closing } from "./Closing";
 import { Contact } from "./Contact";
@@ -77,6 +78,7 @@ export function LandingApp({
         ) : (
           <ServiceStack services={c.services} lang={lang} cta={ui.serviceCta} />
         )}
+        <LandingGallery items={home.gallery} />
         <Process c={c} />
         <Closing c={c} />
         <Contact c={c} />

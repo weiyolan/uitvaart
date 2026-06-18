@@ -229,6 +229,24 @@ export const serviceType = defineType({
             defineField({ name: "note", title: "Nota", type: "internationalizedArrayText" }),
             defineField({ name: "priceNote", title: "Prijsvermelding", type: "internationalizedArrayString" }),
             defineField({
+              name: "koffietafelNote",
+              title: "Koffietafel-nota",
+              description: "Verduidelijking dat de koffietafel niet gefotografeerd wordt. Optioneel.",
+              type: "internationalizedArrayText",
+            }),
+            defineField({
+              name: "bookAddon",
+              title: "Optie: leren boek",
+              description: "Optionele meerprijs (b.v. handgemaakt leren boek met Japans papier, +1000€).",
+              type: "object",
+              options: { collapsible: true, collapsed: true },
+              fields: [
+                defineField({ name: "enabled", title: "Tonen", type: "boolean", initialValue: false }),
+                defineField({ name: "label", title: "Omschrijving", type: "internationalizedArrayString" }),
+                defineField({ name: "priceNote", title: "Meerprijs", type: "internationalizedArrayString" }),
+              ],
+            }),
+            defineField({
               name: "items",
               title: "Formules",
               type: "array",
