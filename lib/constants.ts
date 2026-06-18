@@ -39,6 +39,17 @@ export interface SpLabelSet {
   popular: string;
   ask: string;
 }
+
+/* Extra landing-page gallery frames (placeholders until scans are added). */
+export const HOME_GALLERY: { tag: string; corner: string; meta: Record<Lang, string> }[] = [
+  { tag: "Kodak Portra 400", corner: "6×7 · 01", meta: { nl: "Stil licht", en: "Quiet light", fr: "Lumière calme" } },
+  { tag: "Ilford HP5+", corner: "6×7 · 02", meta: { nl: "Handen samen", en: "Hands together", fr: "Mains jointes" } },
+  { tag: "Kodak Tri-X 400", corner: "6×7 · 03", meta: { nl: "Een blik", en: "A glance", fr: "Un regard" } },
+  { tag: "Kodak Portra 160", corner: "6×7 · 04", meta: { nl: "Warm namiddaglicht", en: "Warm afternoon light", fr: "Lumière d'après-midi" } },
+  { tag: "Fujifilm Pro 400H", corner: "6×7 · 05", meta: { nl: "Samen", en: "Together", fr: "Ensemble" } },
+  { tag: "Ilford Delta 3200", corner: "6×7 · 06", meta: { nl: "Het detail", en: "The detail", fr: "Le détail" } },
+];
+
 export const SP_LABELS: Record<Lang, SpLabelSet> = {
   nl: {
     gallery: {

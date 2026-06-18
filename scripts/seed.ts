@@ -12,12 +12,14 @@ import type { Lang } from "../lib/content";
 import { MW_PAGES } from "../lib/content-pages";
 import type { ServiceSlug } from "../lib/content-pages";
 import {
+  HOME_GALLERY,
   LP_RAIL,
   LP_SHOW_HEAD,
   LP_SVC_CTA,
   LP_THEME_LABEL,
   SP_LABELS,
 } from "../lib/constants";
+import { CONTACT_FORM_DEFAULTS, type DefaultChrome, type DefaultStep } from "../lib/contact-form-defaults";
 import { LOCALE_IDS } from "../lib/i18n";
 
 const token = process.env.SANITY_API_WRITE_TOKEN;
@@ -67,6 +69,48 @@ const localizedParagraphs = (key: string, count: number, pick: (l: Lang, i: numb
     _type: "localizedParagraph",
     _key: `${key}-${i + 1}`,
     text: i18nText((l) => pick(l, i)),
+  }));
+
+/* ---- contact-form (per-service typeform config) --------------------- */
+
+const formChrome = (c: DefaultChrome) => ({
+  overline: i18nString((l) => c.overline[l]),
+  title: i18nString((l) => c.title[l]),
+  intro: i18nText((l) => c.intro[l]),
+  submitLabel: i18nString((l) => c.submitLabel[l]),
+  submittingLabel: i18nString((l) => c.submittingLabel[l]),
+  backLabel: i18nString((l) => c.backLabel[l]),
+  nextLabel: i18nString((l) => c.nextLabel[l]),
+  reviewLabel: i18nString((l) => c.reviewLabel[l]),
+  reviewTitle: i18nString((l) => c.reviewTitle[l]),
+  progressLabel: i18nString((l) => c.progressLabel[l]),
+  successTitle: i18nString((l) => c.successTitle[l]),
+  successBody: i18nText((l) => c.successBody[l]),
+  errorBody: i18nText((l) => c.errorBody[l]),
+  consentLabel: i18nString((l) => c.consentLabel[l]),
+  requiredError: i18nString((l) => c.requiredError[l]),
+  emailError: i18nString((l) => c.emailError[l]),
+});
+
+const localizedFormSteps = (steps: DefaultStep[]) =>
+  steps.map((st, i) => ({
+    _type: "formStep",
+    _key: `step-${i + 1}`,
+    key: st.key,
+    type: st.type,
+    label: i18nString((l) => st.label[l]),
+    ...(st.help ? { help: i18nText((l) => st.help![l]) } : {}),
+    ...(st.placeholder ? { placeholder: i18nString((l) => st.placeholder![l]) } : {}),
+    required: st.required,
+    ...(st.options
+      ? {
+          options: st.options.map((o, k) => ({
+            _type: "localizedItem",
+            _key: `${st.key}-opt-${k + 1}`,
+            value: i18nString((l) => o.label[l]),
+          })),
+        }
+      : {}),
   }));
 
 /* ---- siteSettings ----------------------------------------------------- */
@@ -203,6 +247,13 @@ const homePage = {
     body: i18nText((l) => MW[l].philosophy.body),
     indexOverline: i18nString((l) => MW[l].philosophy.indexOverline),
   },
+  gallery: HOME_GALLERY.map((g, i) => ({
+    _type: "filmFigure",
+    _key: `gal-${i + 1}`,
+    tag: g.tag,
+    meta: i18nString((l) => g.meta[l]),
+    corner: g.corner,
+  })),
   process: {
     overline: i18nString((l) => MW[l].process.overline),
     title: i18nString((l) => MW[l].process.title),
@@ -305,6 +356,12 @@ const serviceDocs = SLUGS.map((slug, idx) => {
         title: i18nString((l) => MW_PAGES[l][slug].packages.title),
         note: i18nText((l) => MW_PAGES[l][slug].packages.note),
         priceNote: i18nString((l) => MW_PAGES[l][slug].packages.priceNote),
+        koffietafelNote: i18nText((l) => MW_PAGES[l][slug].packages.koffietafelNote),
+        bookAddon: {
+          enabled: !!nlPage.packages.bookAddon,
+          label: i18nString((l) => MW_PAGES[l][slug].packages.bookAddon?.label),
+          priceNote: i18nString((l) => MW_PAGES[l][slug].packages.bookAddon?.priceNote),
+        },
         items: nlPage.packages.items.map((item, i) => ({
           _type: "packageItem",
           _key: `pkg-${i + 1}`,
@@ -328,6 +385,10 @@ const serviceDocs = SLUGS.map((slug, idx) => {
           a: i18nText((l) => MW_PAGES[l][slug].faq.items[i]?.a),
         })),
       },
+    },
+    contactForm: {
+      ...formChrome(CONTACT_FORM_DEFAULTS[slug].chrome),
+      steps: localizedFormSteps(CONTACT_FORM_DEFAULTS[slug].steps),
     },
   };
 });

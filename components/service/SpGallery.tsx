@@ -20,7 +20,7 @@ export function SpGallery({ page, labels }: { page: ServicePage; labels: SpGalle
         <div className="sp-gal-grid">
           {frames.map((f, i) => (
             <Reveal className={f.cls} key={i} style={{ transitionDelay: `${i * 70}ms` }}>
-              <FilmFrame className="frame--light" tag={f.stock} meta={f.meta} corner={f.corner} image={f.image} />
+              <FilmFrame className="frame--light" tag={f.stock} meta={f.meta} corner={f.corner} image={f.image} zoomable />
             </Reveal>
           ))}
         </div>

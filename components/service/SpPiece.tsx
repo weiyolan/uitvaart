@@ -15,7 +15,7 @@ export function SpPiece({ page }: { page: ServicePage }) {
     <section className="sp-piece" id="piece" data-fig={figLeft ? "left" : "right"}>
       <div className="wrap sp-piece-grid">
         <Reveal className="sp-piece-fig">
-          <FilmFrame className="frame--light" tag={p.fig?.tag} meta={p.fig?.meta} corner={p.fig?.corner} image={p.fig?.image} />
+          <FilmFrame className="frame--light" tag={p.fig?.tag} meta={p.fig?.meta} corner={p.fig?.corner} image={p.fig?.image} zoomable />
           <span className="sp-piece-result">
             <span className="k">{p.result[0]}</span>
             <span className="v">{p.result[1]}</span>

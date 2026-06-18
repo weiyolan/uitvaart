@@ -19,6 +19,7 @@ function ParallaxFig({
   meta?: string;
   corner?: string;
   image?: Figure["image"];
+  zoomable?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   useParallax(ref, amount);
@@ -64,7 +65,7 @@ export function SpHero({ page }: { page: ServicePage }) {
             {sub}
           </div>
           <Reveal className="sp-hero-fig">
-            <ParallaxFig amount={34} className="frame--light" tag={h.fig?.tag} meta={h.fig?.meta} corner={h.fig?.corner} image={h.fig?.image} />
+            <ParallaxFig amount={34} className="frame--light" tag={h.fig?.tag} meta={h.fig?.meta} corner={h.fig?.corner} image={h.fig?.image} zoomable />
           </Reveal>
         </div>
       </header>
@@ -86,6 +87,7 @@ export function SpHero({ page }: { page: ServicePage }) {
             meta={h.fig?.meta}
             corner={h.fig?.corner}
             image={h.fig?.image}
+            zoomable
           />
         </Reveal>
       </div>

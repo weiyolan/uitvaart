@@ -29,7 +29,7 @@ export function SpWhy({ page }: { page: ServicePage }) {
             </div>
           </div>
           <Reveal className="sp-why-fig">
-            <FilmFrame className="frame--light" tag={w.fig?.tag} meta={w.fig?.meta} corner={w.fig?.corner} image={w.fig?.image} />
+            <FilmFrame className="frame--light" tag={w.fig?.tag} meta={w.fig?.meta} corner={w.fig?.corner} image={w.fig?.image} zoomable />
           </Reveal>
         </div>
         <div className="sp-pull">

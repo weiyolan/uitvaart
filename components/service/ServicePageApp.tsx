@@ -15,6 +15,7 @@ import { SpGallery } from "./SpGallery";
 import { SpFaq } from "./SpFaq";
 import { SpClosing } from "./SpClosing";
 import { SpFooter } from "./SpFooter";
+import { LightboxProvider } from "@/components/shared/Lightbox";
 
 export function ServicePageApp({
   lang,
@@ -58,22 +59,31 @@ export function ServicePageApp({
   }, [svc]);
 
   return (
-    <div data-svc={svc}>
-      <SpTop lang={lang} back={page.back} themeLabel={ui.themeLabel} theme={theme} onToggleTheme={toggleTheme} />
-      <main>
-        <SpHero page={page} />
-        <SpWhy page={page} />
-        <SpHow page={page} />
-        <SpPiece page={page} />
-        <SpPackages page={page} ctaLabel={{ popular: ui.popular, ask: ui.ask }} />
-        <SpGallery
-          page={page}
-          labels={{ overline: ui.galleryOverline, title: ui.galleryTitle, note: ui.galleryNote }}
-        />
-        <SpFaq page={page} />
-        <SpClosing lang={lang} contact={settings.contact} others={others} crossLabel={ui.cross} />
-      </main>
-      <SpFooter lang={lang} nav={settings.nav} foot={settings.foot} business={settings.business} />
-    </div>
+    <LightboxProvider>
+      <div data-svc={svc}>
+        <SpTop lang={lang} back={page.back} themeLabel={ui.themeLabel} theme={theme} onToggleTheme={toggleTheme} />
+        <main>
+          <SpHero page={page} />
+          <SpWhy page={page} />
+          <SpHow page={page} />
+          <SpPiece page={page} />
+          <SpGallery
+            page={page}
+            labels={{ overline: ui.galleryOverline, title: ui.galleryTitle, note: ui.galleryNote }}
+          />
+          <SpPackages page={page} ctaLabel={{ popular: ui.popular, ask: ui.ask }} />
+          <SpFaq page={page} />
+          <SpClosing
+            lang={lang}
+            contact={settings.contact}
+            formConfig={page.contactForm}
+            svc={svc}
+            others={others}
+            crossLabel={ui.cross}
+          />
+        </main>
+        <SpFooter lang={lang} nav={settings.nav} foot={settings.foot} business={settings.business} />
+      </div>
+    </LightboxProvider>
   );
 }

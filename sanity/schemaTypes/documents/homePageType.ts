@@ -13,6 +13,7 @@ export const homePageType = defineType({
     { name: "hero", title: "Hero", default: true },
     { name: "showcase", title: "Showcase" },
     { name: "philosophy", title: "Filosofie" },
+    { name: "gallery", title: "Extra galerij" },
     { name: "process", title: "Traject" },
     { name: "closing", title: "Slot" },
     { name: "seo", title: "SEO" },
@@ -102,6 +103,15 @@ export const homePageType = defineType({
           to: [{ type: "photo" }],
         }),
       ],
+    }),
+    defineField({
+      name: "gallery",
+      title: "Extra galerij",
+      description:
+        "Extra foto's onderaan de homepagina (na de filosofie). Optioneel — placeholders tonen tot er scans gekozen zijn.",
+      type: "array",
+      group: "gallery",
+      of: [defineArrayMember({ type: "filmFigure" })],
     }),
     defineField({
       name: "process",

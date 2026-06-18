@@ -124,7 +124,18 @@ export const HOME_QUERY = defineQuery(`{
       "overline": coalesce(closing.overline[language == $lang][0].value, closing.overline[language == "nl"][0].value, ""),
       "statement": coalesce(closing.statement[language == $lang][0].value, closing.statement[language == "nl"][0].value, ""),
       "sub": coalesce(closing.sub[language == $lang][0].value, closing.sub[language == "nl"][0].value, "")
-    }
+    },
+    "gallery": coalesce(gallery[]{
+      "tag": coalesce(tag, ""),
+      "meta": coalesce(meta[language == $lang][0].value, meta[language == "nl"][0].value, ""),
+      "corner": coalesce(corner, ""),
+      "image": image->{
+        "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, ""),
+        "asset": image.asset->{ _id, url, metadata{ lqip, dimensions{ width, height } } },
+        "hotspot": image.hotspot,
+        "crop": image.crop
+      }
+    }, [])
   },
   "services": *[_type == "service"] | order(order asc){
     "key": coalesce(slug.current, ""),
@@ -322,6 +333,12 @@ export const SERVICE_QUERY = defineQuery(`{
       "title": coalesce(page.packages.title[language == $lang][0].value, page.packages.title[language == "nl"][0].value, ""),
       "note": coalesce(page.packages.note[language == $lang][0].value, page.packages.note[language == "nl"][0].value, ""),
       "priceNote": coalesce(page.packages.priceNote[language == $lang][0].value, page.packages.priceNote[language == "nl"][0].value, ""),
+      "koffietafelNote": coalesce(page.packages.koffietafelNote[language == $lang][0].value, page.packages.koffietafelNote[language == "nl"][0].value, ""),
+      "bookAddon": {
+        "enabled": page.packages.bookAddon.enabled == true,
+        "label": coalesce(page.packages.bookAddon.label[language == $lang][0].value, page.packages.bookAddon.label[language == "nl"][0].value, ""),
+        "priceNote": coalesce(page.packages.bookAddon.priceNote[language == $lang][0].value, page.packages.bookAddon.priceNote[language == "nl"][0].value, "")
+      },
       "items": coalesce(page.packages.items[]{
         _key,
         "name": coalesce(name[language == $lang][0].value, name[language == "nl"][0].value, ""),
@@ -346,6 +363,36 @@ export const SERVICE_QUERY = defineQuery(`{
       "asset": image.asset->{ _id, url, metadata{ lqip, dimensions{ width, height } } },
       "hotspot": image.hotspot,
       "crop": image.crop
+    },
+    "contactForm": {
+      "overline": coalesce(contactForm.overline[language == $lang][0].value, contactForm.overline[language == "nl"][0].value, ""),
+      "title": coalesce(contactForm.title[language == $lang][0].value, contactForm.title[language == "nl"][0].value, ""),
+      "intro": coalesce(contactForm.intro[language == $lang][0].value, contactForm.intro[language == "nl"][0].value, ""),
+      "submitLabel": coalesce(contactForm.submitLabel[language == $lang][0].value, contactForm.submitLabel[language == "nl"][0].value, ""),
+      "submittingLabel": coalesce(contactForm.submittingLabel[language == $lang][0].value, contactForm.submittingLabel[language == "nl"][0].value, ""),
+      "backLabel": coalesce(contactForm.backLabel[language == $lang][0].value, contactForm.backLabel[language == "nl"][0].value, ""),
+      "nextLabel": coalesce(contactForm.nextLabel[language == $lang][0].value, contactForm.nextLabel[language == "nl"][0].value, ""),
+      "reviewLabel": coalesce(contactForm.reviewLabel[language == $lang][0].value, contactForm.reviewLabel[language == "nl"][0].value, ""),
+      "reviewTitle": coalesce(contactForm.reviewTitle[language == $lang][0].value, contactForm.reviewTitle[language == "nl"][0].value, ""),
+      "progressLabel": coalesce(contactForm.progressLabel[language == $lang][0].value, contactForm.progressLabel[language == "nl"][0].value, ""),
+      "successTitle": coalesce(contactForm.successTitle[language == $lang][0].value, contactForm.successTitle[language == "nl"][0].value, ""),
+      "successBody": coalesce(contactForm.successBody[language == $lang][0].value, contactForm.successBody[language == "nl"][0].value, ""),
+      "errorBody": coalesce(contactForm.errorBody[language == $lang][0].value, contactForm.errorBody[language == "nl"][0].value, ""),
+      "consentLabel": coalesce(contactForm.consentLabel[language == $lang][0].value, contactForm.consentLabel[language == "nl"][0].value, ""),
+      "requiredError": coalesce(contactForm.requiredError[language == $lang][0].value, contactForm.requiredError[language == "nl"][0].value, ""),
+      "emailError": coalesce(contactForm.emailError[language == $lang][0].value, contactForm.emailError[language == "nl"][0].value, ""),
+      "steps": coalesce(contactForm.steps[]{
+        "key": coalesce(key, ""),
+        "type": coalesce(type, "short-text"),
+        "label": coalesce(label[language == $lang][0].value, label[language == "nl"][0].value, ""),
+        "help": coalesce(help[language == $lang][0].value, help[language == "nl"][0].value, ""),
+        "placeholder": coalesce(placeholder[language == $lang][0].value, placeholder[language == "nl"][0].value, ""),
+        "required": required == true,
+        "options": coalesce(options[]{
+          "value": lower(coalesce(value[language == "nl"][0].value, "")),
+          "label": coalesce(value[language == $lang][0].value, value[language == "nl"][0].value, "")
+        }, [])
+      }, [])
     }
   },
   "others": *[_type == "service" && slug.current != $slug] | order(order asc){
@@ -364,6 +411,20 @@ export const SERVICE_QUERY = defineQuery(`{
       "crop": image.crop
     }
   }
+}`);
+
+/* Minimal business facts for the contact emails' branded footer — fetched
+   server-side in app/api/contact/route.ts (published, stega-free). */
+export const CONTACT_BUSINESS_QUERY = defineQuery(`*[_type == "siteSettings"][0].business{
+  "siteName": coalesce(siteName, "Milo Weiler"),
+  "email": coalesce(email, ""),
+  "phone": coalesce(phone, ""),
+  "phoneDisplay": coalesce(phoneDisplay, ""),
+  "instagramUrl": coalesce(instagramUrl, ""),
+  "instagramHandle": coalesce(instagramHandle, ""),
+  "streetAddress": coalesce(streetAddress, ""),
+  "postalCode": coalesce(postalCode, ""),
+  "city": coalesce(city, "")
 }`);
 
 export const SERVICE_SLUGS_QUERY = defineQuery(`
