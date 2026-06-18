@@ -15,6 +15,7 @@ import { Process } from "./Process";
 import { Closing } from "./Closing";
 import { Contact } from "./Contact";
 import { Footer } from "./Footer";
+import { LightboxProvider } from "@/components/shared/Lightbox";
 
 const SECTION_IDS = ["top", "overzicht", "filosofie", "uitvaart", "portret", "huwelijk", "traject", "contact"];
 
@@ -64,7 +65,7 @@ export function LandingApp({
       : active;
 
   return (
-    <>
+    <LightboxProvider>
       <TopBar lang={lang} themeLabel={ui.themeLabel} theme={theme} onToggleTheme={toggleTheme} />
       <RailNav items={railItems} active={railActive} />
       <main>
@@ -79,6 +80,6 @@ export function LandingApp({
         <Contact c={c} />
       </main>
       <Footer lang={lang} c={c} business={settings.business} />
-    </>
+    </LightboxProvider>
   );
 }

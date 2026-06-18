@@ -57,6 +57,7 @@ export function ServiceRow({
             meta={data.homeFrames?.row?.meta}
             corner={data.homeFrames?.row?.corner}
             image={data.homeFrames?.row?.image}
+            zoomable
           />
           <span className="lp-svc-result">
             <span className="k">{data.result[0]}</span>
