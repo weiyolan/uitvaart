@@ -4,6 +4,7 @@ import { seoType } from "./objects/seoType";
 import { filmFigureType } from "./objects/filmFigureType";
 import { processStepType } from "./objects/processStepType";
 import { localizedItemType, localizedParagraphType } from "./objects/localizedItems";
+import { formStepType } from "./objects/formStepType";
 import { photoType } from "./objects/photoType";
 import { siteSettingsType } from "./documents/siteSettingsType";
 import { homePageType } from "./documents/homePageType";
@@ -16,6 +17,7 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   processStepType,
   localizedItemType,
   localizedParagraphType,
+  formStepType,
   // documents
   photoType,
   siteSettingsType,

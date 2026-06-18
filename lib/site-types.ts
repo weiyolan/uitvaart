@@ -47,7 +47,9 @@ export type ServiceSettings = NonNullable<ServiceData["settings"]>;
 export type ServicePageDoc = NonNullable<ServiceData["page"]>;
 export type ServiceCrossLink = ServiceData["others"][number];
 export type ServiceUi = ServiceSettings["ui"];
-export type ContactFormLabels = ServiceSettings["contactForm"];
+export type ServiceFormConfig = NonNullable<ServicePageDoc["contactForm"]>;
+export type ServiceFormStep = ServiceFormConfig["steps"][number];
+export type ServiceFormOption = ServiceFormStep["options"][number];
 
 /* Composed in the service page route: document + shared UI labels. */
 export type ServicePage = ServicePageDoc & {

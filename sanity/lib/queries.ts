@@ -234,37 +234,6 @@ export const SERVICE_QUERY = defineQuery(`{
       "popular": coalesce(ui.spPopular[language == $lang][0].value, ui.spPopular[language == "nl"][0].value, ""),
       "ask": coalesce(ui.spAsk[language == $lang][0].value, ui.spAsk[language == "nl"][0].value, "")
     },
-    "contactForm": {
-      "overline": coalesce(contactForm.overline[language == $lang][0].value, contactForm.overline[language == "nl"][0].value, ""),
-      "title": coalesce(contactForm.title[language == $lang][0].value, contactForm.title[language == "nl"][0].value, ""),
-      "intro": coalesce(contactForm.intro[language == $lang][0].value, contactForm.intro[language == "nl"][0].value, ""),
-      "nameLabel": coalesce(contactForm.nameLabel[language == $lang][0].value, contactForm.nameLabel[language == "nl"][0].value, ""),
-      "emailLabel": coalesce(contactForm.emailLabel[language == $lang][0].value, contactForm.emailLabel[language == "nl"][0].value, ""),
-      "phoneLabel": coalesce(contactForm.phoneLabel[language == $lang][0].value, contactForm.phoneLabel[language == "nl"][0].value, ""),
-      "dateLabel": coalesce(contactForm.dateLabel[language == $lang][0].value, contactForm.dateLabel[language == "nl"][0].value, ""),
-      "timeLabel": coalesce(contactForm.timeLabel[language == $lang][0].value, contactForm.timeLabel[language == "nl"][0].value, ""),
-      "locationLabel": coalesce(contactForm.locationLabel[language == $lang][0].value, contactForm.locationLabel[language == "nl"][0].value, ""),
-      "funeralHomeLabel": coalesce(contactForm.funeralHomeLabel[language == $lang][0].value, contactForm.funeralHomeLabel[language == "nl"][0].value, ""),
-      "whoLabel": coalesce(contactForm.whoLabel[language == $lang][0].value, contactForm.whoLabel[language == "nl"][0].value, ""),
-      "commentsLabel": coalesce(contactForm.commentsLabel[language == $lang][0].value, contactForm.commentsLabel[language == "nl"][0].value, ""),
-      "photoPrefLegend": coalesce(contactForm.photoPrefLegend[language == $lang][0].value, contactForm.photoPrefLegend[language == "nl"][0].value, ""),
-      "photoColor": coalesce(contactForm.photoColor[language == $lang][0].value, contactForm.photoColor[language == "nl"][0].value, ""),
-      "photoBw": coalesce(contactForm.photoBw[language == $lang][0].value, contactForm.photoBw[language == "nl"][0].value, ""),
-      "photoNone": coalesce(contactForm.photoNone[language == $lang][0].value, contactForm.photoNone[language == "nl"][0].value, ""),
-      "partsLegend": coalesce(contactForm.partsLegend[language == $lang][0].value, contactForm.partsLegend[language == "nl"][0].value, ""),
-      "partCeremony": coalesce(contactForm.partCeremony[language == $lang][0].value, contactForm.partCeremony[language == "nl"][0].value, ""),
-      "partBurial": coalesce(contactForm.partBurial[language == $lang][0].value, contactForm.partBurial[language == "nl"][0].value, ""),
-      "partsHint": coalesce(contactForm.partsHint[language == $lang][0].value, contactForm.partsHint[language == "nl"][0].value, ""),
-      "bookLabel": coalesce(contactForm.bookLabel[language == $lang][0].value, contactForm.bookLabel[language == "nl"][0].value, ""),
-      "consentLabel": coalesce(contactForm.consentLabel[language == $lang][0].value, contactForm.consentLabel[language == "nl"][0].value, ""),
-      "submitLabel": coalesce(contactForm.submitLabel[language == $lang][0].value, contactForm.submitLabel[language == "nl"][0].value, ""),
-      "submittingLabel": coalesce(contactForm.submittingLabel[language == $lang][0].value, contactForm.submittingLabel[language == "nl"][0].value, ""),
-      "successTitle": coalesce(contactForm.successTitle[language == $lang][0].value, contactForm.successTitle[language == "nl"][0].value, ""),
-      "successBody": coalesce(contactForm.successBody[language == $lang][0].value, contactForm.successBody[language == "nl"][0].value, ""),
-      "errorBody": coalesce(contactForm.errorBody[language == $lang][0].value, contactForm.errorBody[language == "nl"][0].value, ""),
-      "requiredError": coalesce(contactForm.requiredError[language == $lang][0].value, contactForm.requiredError[language == "nl"][0].value, ""),
-      "emailError": coalesce(contactForm.emailError[language == $lang][0].value, contactForm.emailError[language == "nl"][0].value, "")
-    },
     "business": {
       "siteName": coalesce(business.siteName, "Milo Weiler"),
       "jobTitle": coalesce(business.jobTitle[language == $lang][0].value, business.jobTitle[language == "nl"][0].value, ""),
@@ -394,6 +363,36 @@ export const SERVICE_QUERY = defineQuery(`{
       "asset": image.asset->{ _id, url, metadata{ lqip, dimensions{ width, height } } },
       "hotspot": image.hotspot,
       "crop": image.crop
+    },
+    "contactForm": {
+      "overline": coalesce(contactForm.overline[language == $lang][0].value, contactForm.overline[language == "nl"][0].value, ""),
+      "title": coalesce(contactForm.title[language == $lang][0].value, contactForm.title[language == "nl"][0].value, ""),
+      "intro": coalesce(contactForm.intro[language == $lang][0].value, contactForm.intro[language == "nl"][0].value, ""),
+      "submitLabel": coalesce(contactForm.submitLabel[language == $lang][0].value, contactForm.submitLabel[language == "nl"][0].value, ""),
+      "submittingLabel": coalesce(contactForm.submittingLabel[language == $lang][0].value, contactForm.submittingLabel[language == "nl"][0].value, ""),
+      "backLabel": coalesce(contactForm.backLabel[language == $lang][0].value, contactForm.backLabel[language == "nl"][0].value, ""),
+      "nextLabel": coalesce(contactForm.nextLabel[language == $lang][0].value, contactForm.nextLabel[language == "nl"][0].value, ""),
+      "reviewLabel": coalesce(contactForm.reviewLabel[language == $lang][0].value, contactForm.reviewLabel[language == "nl"][0].value, ""),
+      "reviewTitle": coalesce(contactForm.reviewTitle[language == $lang][0].value, contactForm.reviewTitle[language == "nl"][0].value, ""),
+      "progressLabel": coalesce(contactForm.progressLabel[language == $lang][0].value, contactForm.progressLabel[language == "nl"][0].value, ""),
+      "successTitle": coalesce(contactForm.successTitle[language == $lang][0].value, contactForm.successTitle[language == "nl"][0].value, ""),
+      "successBody": coalesce(contactForm.successBody[language == $lang][0].value, contactForm.successBody[language == "nl"][0].value, ""),
+      "errorBody": coalesce(contactForm.errorBody[language == $lang][0].value, contactForm.errorBody[language == "nl"][0].value, ""),
+      "consentLabel": coalesce(contactForm.consentLabel[language == $lang][0].value, contactForm.consentLabel[language == "nl"][0].value, ""),
+      "requiredError": coalesce(contactForm.requiredError[language == $lang][0].value, contactForm.requiredError[language == "nl"][0].value, ""),
+      "emailError": coalesce(contactForm.emailError[language == $lang][0].value, contactForm.emailError[language == "nl"][0].value, ""),
+      "steps": coalesce(contactForm.steps[]{
+        "key": coalesce(key, ""),
+        "type": coalesce(type, "short-text"),
+        "label": coalesce(label[language == $lang][0].value, label[language == "nl"][0].value, ""),
+        "help": coalesce(help[language == $lang][0].value, help[language == "nl"][0].value, ""),
+        "placeholder": coalesce(placeholder[language == $lang][0].value, placeholder[language == "nl"][0].value, ""),
+        "required": required == true,
+        "options": coalesce(options[]{
+          "value": lower(coalesce(value[language == "nl"][0].value, "")),
+          "label": coalesce(value[language == $lang][0].value, value[language == "nl"][0].value, "")
+        }, [])
+      }, [])
     }
   },
   "others": *[_type == "service" && slug.current != $slug] | order(order asc){
@@ -412,6 +411,20 @@ export const SERVICE_QUERY = defineQuery(`{
       "crop": image.crop
     }
   }
+}`);
+
+/* Minimal business facts for the contact emails' branded footer — fetched
+   server-side in app/api/contact/route.ts (published, stega-free). */
+export const CONTACT_BUSINESS_QUERY = defineQuery(`*[_type == "siteSettings"][0].business{
+  "siteName": coalesce(siteName, "Milo Weiler"),
+  "email": coalesce(email, ""),
+  "phone": coalesce(phone, ""),
+  "phoneDisplay": coalesce(phoneDisplay, ""),
+  "instagramUrl": coalesce(instagramUrl, ""),
+  "instagramHandle": coalesce(instagramHandle, ""),
+  "streetAddress": coalesce(streetAddress, ""),
+  "postalCode": coalesce(postalCode, ""),
+  "city": coalesce(city, "")
 }`);
 
 export const SERVICE_SLUGS_QUERY = defineQuery(`

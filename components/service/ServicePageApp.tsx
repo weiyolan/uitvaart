@@ -76,7 +76,7 @@ export function ServicePageApp({
           <SpClosing
             lang={lang}
             contact={settings.contact}
-            formLabels={settings.contactForm}
+            formConfig={page.contactForm}
             svc={svc}
             others={others}
             crossLabel={ui.cross}
