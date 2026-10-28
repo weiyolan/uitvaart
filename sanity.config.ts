@@ -41,6 +41,10 @@ export default defineConfig({
       // Locale pre-filled on new documents; the others are added on demand.
       defaultLanguages: ["nl"],
       fieldTypes: ["string", "text"],
+      // No plugin add buttons: the NL | EN | FR tabs (StudioFields.tsx) add the
+      // active language themselves; the plugin's row of disabled/enabled
+      // "+ NL / + EN / + FR" + "Add missing languages" duplicated the tabs.
+      buttonLocations: [],
       // NB: no `languageFilter` here on purpose. The plugin's built-in
       // @sanity/language-filter is a per-user, per-browser funnel that does not
       // reliably hide EN/FR by default. We collapse them deterministically for

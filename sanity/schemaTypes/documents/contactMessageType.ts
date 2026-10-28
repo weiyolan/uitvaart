@@ -11,6 +11,8 @@ export const contactMessageType = defineType({
   title: "Bericht",
   type: "document",
   icon: CommentIcon,
+  // Status/notitie apply instantly — no draft + Publiceren for an inbox.
+  liveEdit: true,
   components: { input: MessageCardInput },
   fields: [
     defineField({

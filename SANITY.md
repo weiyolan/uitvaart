@@ -75,3 +75,5 @@ Studio structure (most-used first, ≤2 clicks to anything):
 - **Berichten**: readable card (who, service, answers, mail status, one-click *Antwoorden*), then status (Nieuw → Beantwoord → Gearchiveerd) + internal note. Created only by the site form; no duplicate action.
 - **Mail & berichten** (singleton): owner address, mail-me / confirm-visitor switches, sender name, reply-to, per-language confirmation subject/heading/lead/closing (empty = built-in copy in `lib/contact-email.ts`).
 - Env: `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` (verified domain), `SANITY_API_MESSAGES_TOKEN`.
+- Language tabs own the "add language" action (plugin `buttonLocations: []`): an empty tab shows "<Taal> toevoegen". A dot on a tab = still empty (red on NL when the field is required).
+- Messages use `liveEdit`: status/notitie save instantly, no Publiceren.

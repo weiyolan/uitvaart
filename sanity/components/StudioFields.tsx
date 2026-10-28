@@ -2,8 +2,8 @@
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import { Box, Button, Flex, Popover, Text } from "@sanity/ui";
-import { HelpCircleIcon } from "@sanity/icons";
-import type { FieldProps, ItemProps, ObjectItem, SchemaType } from "sanity";
+import { AddIcon, HelpCircleIcon } from "@sanity/icons";
+import type { ArrayFieldProps, ArraySchemaType, FieldProps, ItemProps, ObjectItem, SchemaType } from "sanity";
 import { DEFAULT_LOCALE, LOCALES } from "../../lib/i18n";
 
 /* Studio UX layer (see SANITY.md → "Studio UX"):
@@ -117,13 +117,26 @@ const ActiveLanguage = createContext<string | null>(null);
 
 type LangItem = { language?: string; value?: unknown } | undefined;
 
+const randomKey = () => Math.random().toString(36).slice(2, 14);
+
 function TabsField(props: FieldProps) {
   const [active, setActive] = useState<string>(DEFAULT_LOCALE);
   const items = (Array.isArray(props.value) ? props.value : []) as LangItem[];
+  const has = (id: string) => items.some((i) => i?.language === id);
   const filled = (id: string) => {
     const v = items.find((i) => i?.language === id)?.value;
     return typeof v === "string" && v.trim() !== "";
   };
+  // Only the default language can be required (see schema rules), so a
+  // field-level error means: the default language is missing.
+  const hasError = props.validation.some((v) => v.level === "error");
+
+  const inputProps = (props as ArrayFieldProps).inputProps;
+  const itemType = (props.schemaType as ArraySchemaType).of?.[0]?.name;
+  const readOnly = Boolean(inputProps?.readOnly);
+  const activeTitle = LOCALES.find((l) => l.id === active)?.title ?? active;
+  const add = () =>
+    itemType && inputProps?.onItemAppend({ _key: randomKey(), _type: itemType, language: active } as never);
 
   return (
     <ActiveLanguage.Provider value={active}>
@@ -137,23 +150,50 @@ function TabsField(props: FieldProps) {
               {props.title}
               {props.description ? <Help text={props.description} /> : null}
             </span>
-            <Flex gap={1} as="span">
-              {LOCALES.map(({ id }) => (
-                <Button
-                  key={id}
-                  mode={id === active ? "default" : "bleed"}
-                  tone={id === active ? "primary" : "default"}
-                  padding={1}
-                  fontSize={0}
-                  text={`${id.toUpperCase()}${filled(id) ? "" : " ·"}`}
-                  title={filled(id) ? undefined : "Nog leeg"}
-                  onClick={() => setActive(id)}
-                />
-              ))}
+            <Flex gap={1} as="span" role="tablist">
+              {LOCALES.map(({ id, title }) => {
+                const isActive = id === active;
+                const dot = hasError && id === DEFAULT_LOCALE && !filled(id) ? "critical" : filled(id) ? null : "empty";
+                return (
+                  <Button
+                    key={id}
+                    role="tab"
+                    aria-selected={isActive}
+                    mode={isActive ? "default" : "bleed"}
+                    tone={isActive ? "primary" : "default"}
+                    padding={1}
+                    fontSize={0}
+                    title={dot ? `${title}: nog leeg` : title}
+                    onClick={() => setActive(id)}
+                  >
+                    <Flex align="center" gap={1} as="span">
+                      <span>{id.toUpperCase()}</span>
+                      {dot ? (
+                        <span
+                          aria-hidden
+                          style={{
+                            width: 5,
+                            height: 5,
+                            borderRadius: "50%",
+                            background: dot === "critical" ? "var(--card-badge-critical-dot-color, #e5484d)" : "currentColor",
+                            opacity: dot === "critical" ? 1 : 0.45,
+                          }}
+                        />
+                      ) : null}
+                    </Flex>
+                  </Button>
+                );
+              })}
             </Flex>
           </Flex> as unknown as string
         ),
       })}
+      {/* Rendered after the field (renderDefault ignores a `children` override). */}
+      {!has(active) && !readOnly ? (
+        <Box marginTop={2}>
+          <Button mode="ghost" icon={AddIcon} text={`${activeTitle} toevoegen`} onClick={add} style={{ width: "100%" }} />
+        </Box>
+      ) : null}
     </ActiveLanguage.Provider>
   );
 }
