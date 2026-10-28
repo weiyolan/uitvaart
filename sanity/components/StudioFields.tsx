@@ -85,7 +85,7 @@ function isShort(props: FieldProps): boolean {
 
 /* ---------- one-row layout ---------- */
 
-const ROW = `.inline-field [data-ui="VStack"]:has(> [data-ui="Flex"] > [data-ui="fieldHeaderContentBox"]):not(.i18n-tab-item *)`;
+const ROW = `.inline-field [data-ui="Stack"]:has(> [data-ui="Flex"] > [data-ui="fieldHeaderContentBox"]):not(.i18n-tab-item *)`;
 const HEAD = `${ROW} > [data-ui="Flex"]:first-child`;
 const INLINE_CSS = `
 .inline-field { container-type: inline-size; margin-block: -10px; }

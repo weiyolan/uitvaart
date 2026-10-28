@@ -59,3 +59,19 @@ Adopted from the yoga Studio UX guide (`weiyolan/yoga`, branch `sanity-ui-guide`
 - Everything wraps `renderDefault`, so comments, the "…" menu, validation and change bars are unchanged.
 
 Rules for new schema: write a `description` saying *where on the site* and *what for* (+ "bv. …" / "Leeg = …"); only the default language is `required`; previews use `nlValue()` (never select an i18n array raw as `title`).
+
+## Mailing & messaging
+
+Owner / default recipient: `milo.weiler@gmail.com` (`lib/mail-config.ts`).
+
+Flow of a contact-form request (`app/api/contact/route.ts`):
+1. Validate (+ honeypot) → read **Mail & berichten** settings from Sanity.
+2. **Store** it as a private `contactMessage` (`contactMessage.<uuid>`, needs `SANITY_API_MESSAGES_TOKEN`) so nothing is lost if mail fails.
+3. **Send** via Resend: notification to the owner (if `notifyOwner`) + confirmation to the visitor (if `sendConfirmation`). Recipient = Studio `ownerEmail` → `CONTACT_TO_EMAIL` → default. Result is written back to the message (`delivery`). If mail fails but the message was stored, the visitor still sees success.
+
+Studio structure (most-used first, ≤2 clicks to anything):
+`Nieuwe berichten` · `Alle berichten` ─ `Homepagina` · `Diensten` ─ `Beeldbibliotheek` ─ `Mail & berichten` · `Site-instellingen`.
+
+- **Berichten**: readable card (who, service, answers, mail status, one-click *Antwoorden*), then status (Nieuw → Beantwoord → Gearchiveerd) + internal note. Created only by the site form; no duplicate action.
+- **Mail & berichten** (singleton): owner address, mail-me / confirm-visitor switches, sender name, reply-to, per-language confirmation subject/heading/lead/closing (empty = built-in copy in `lib/contact-email.ts`).
+- Env: `RESEND_API_KEY`, `CONTACT_FROM_EMAIL` (verified domain), `SANITY_API_MESSAGES_TOKEN`.

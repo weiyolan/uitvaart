@@ -508,3 +508,13 @@ export const SERVICE_SEO_QUERY = defineQuery(`*[_type == "service" && slug.curre
     "a": coalesce(a[language == $lang][0].value, a[language == "nl"][0].value, "")
   }, [])
 }`);
+
+/* Mail & berichten singleton (published, stega-free) for /api/contact. */
+export const MAIL_SETTINGS_QUERY = defineQuery(`*[_id == "mailSettings"][0]{
+  "ownerEmail": coalesce(ownerEmail, ""),
+  "notifyOwner": coalesce(notifyOwner, true),
+  "sendConfirmation": coalesce(sendConfirmation, true),
+  "fromName": coalesce(fromName, ""),
+  "replyTo": coalesce(replyTo, ""),
+  "confirmation": coalesce(confirmation, {})
+}`);

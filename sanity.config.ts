@@ -15,9 +15,9 @@ import { LOCALES } from "./lib/i18n";
 
 /* Types that are created/ordered by the seed + structure, not via the
    "new document" menu. */
-const LOCKED_TYPES = ["siteSettings", "homePage", "service"];
+const LOCKED_TYPES = ["siteSettings", "homePage", "service", "mailSettings", "contactMessage"];
 /* Singletons should not be deleted or duplicated from the Studio. */
-const SINGLETON_TYPES = ["siteSettings", "homePage"];
+const SINGLETON_TYPES = ["siteSettings", "homePage", "mailSettings"];
 
 export default defineConfig({
   basePath: "/studio",
@@ -67,6 +67,9 @@ export default defineConfig({
     actions: (prev, context) =>
       SINGLETON_TYPES.includes(context.schemaType)
         ? prev.filter((action) => !["delete", "duplicate", "unpublish"].includes(action.action ?? ""))
-        : prev,
+        : // Messages come from the website form only: no copies (a copy would get a public id).
+          context.schemaType === "contactMessage"
+          ? prev.filter((action) => action.action !== "duplicate")
+          : prev,
   },
 });

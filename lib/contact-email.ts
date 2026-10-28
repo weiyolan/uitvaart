@@ -4,6 +4,7 @@
    match the website; per-service accent. */
 
 import type { ContactPayload } from "@/components/form/contact-schema";
+import type { MailOverrides } from "./mail-config";
 
 export type BusinessFacts = {
   siteName: string;
@@ -166,22 +167,32 @@ export function buildNotificationEmail(payload: ContactPayload, business: Busine
   return { subject, html, text };
 }
 
-export function buildConfirmationEmail(payload: ContactPayload, business: BusinessFacts) {
+export function buildConfirmationEmail(payload: ContactPayload, business: BusinessFacts, overrides: MailOverrides = {}) {
   const lang = langOf(payload);
-  const t = COPY[lang];
+  const base = COPY[lang];
+  const name = nameOf(payload);
+  const clean = (v?: string) => (v && v.trim() ? v.trim() : undefined);
+  // Studio overrides (Mail & berichten) win over the built-in copy.
+  const t = {
+    ...base,
+    confirmSubject: () => clean(overrides.subject) ?? base.confirmSubject(business.siteName || "Milo Weiler"),
+    confirmHeading: clean(overrides.heading) ?? base.confirmHeading,
+    confirmLead: () => clean(overrides.lead) ?? base.confirmLead(name),
+    next: clean(overrides.next) ?? base.next,
+  };
   const accent = ACCENT[payload.service] ?? "#8a7f6b";
-  const subject = t.confirmSubject(business.siteName || "Milo Weiler");
+  const subject = t.confirmSubject();
   const summaryHeading = `<div style="font-family:${MONO};font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:${INK_FAINT};margin-bottom:6px">${esc(t.summary)}</div>`;
   const html = shell({
     accent,
     heading: t.confirmHeading,
-    lead: t.confirmLead(nameOf(payload)),
+    lead: t.confirmLead(),
     bodyHtml: summaryHeading + answersTable(payload, lang),
     footerNote: t.next,
     business,
   });
   const text =
-    `${t.confirmHeading}\n${t.confirmLead(nameOf(payload))}\n\n` +
+    `${t.confirmHeading}\n${t.confirmLead()}\n\n` +
     payload.answers.filter((a) => valueOf(a, lang)).map((a) => `${a.label}: ${valueOf(a, lang)}`).join("\n") +
     `\n\n${t.next}`;
   return { subject, html, text };

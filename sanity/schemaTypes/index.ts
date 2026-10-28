@@ -8,6 +8,8 @@ import { formStepType } from "./objects/formStepType";
 import { photoType } from "./objects/photoType";
 import { siteSettingsType } from "./documents/siteSettingsType";
 import { homePageType } from "./documents/homePageType";
+import { mailSettingsType } from "./documents/mailSettingsType";
+import { contactMessageType } from "./documents/contactMessageType";
 import { serviceType } from "./documents/serviceType";
 
 export const schemaTypes: SchemaTypeDefinition[] = [
@@ -23,4 +25,6 @@ export const schemaTypes: SchemaTypeDefinition[] = [
   siteSettingsType,
   homePageType,
   serviceType,
+  mailSettingsType,
+  contactMessageType,
 ];

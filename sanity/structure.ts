@@ -1,13 +1,34 @@
 import type { StructureResolver } from "sanity/structure";
-import { CogIcon, HomeIcon, ImagesIcon } from "@sanity/icons";
+import { CogIcon, CommentIcon, EnvelopeIcon, HomeIcon, ImagesIcon, InboxIcon } from "@sanity/icons";
 import { PhotoLibraryPane } from "./components/PhotoLibraryPane";
 
-/* Pinned singletons + the three services in fixed order. All other types
-   (including any legacy ones in the dataset) stay hidden. */
+/* Logical flow, most-used first:
+   1. Berichten  — what came in (inbox), newest first
+   2. Pagina's   — homepage + the three services, then the photo library
+   3. Instellingen — mail & berichten, site settings
+   Every document is at most two clicks away. All other types (including any
+   legacy ones in the dataset) stay hidden. */
+
+const messageList = (S: Parameters<StructureResolver>[0], title: string, filter: string) =>
+  S.documentList()
+    .title(title)
+    .schemaType("contactMessage")
+    .filter(`_type == "contactMessage" && ${filter}`)
+    .defaultOrdering([{ field: "receivedAt", direction: "desc" }]);
+
 export const structure: StructureResolver = (S) =>
   S.list()
     .title("Inhoud")
     .items([
+      S.listItem()
+        .title("Nieuwe berichten")
+        .icon(InboxIcon)
+        .child(messageList(S, "Nieuwe berichten", `coalesce(status, "new") == "new"`)),
+      S.listItem()
+        .title("Alle berichten")
+        .icon(CommentIcon)
+        .child(messageList(S, "Alle berichten", "true")),
+      S.divider(),
       S.listItem()
         .title("Homepagina")
         .icon(HomeIcon)
@@ -36,6 +57,11 @@ export const structure: StructureResolver = (S) =>
                 ["create", "edit"].includes(intent) && params?.type === "photo",
             ),
         ),
+      S.divider(),
+      S.listItem()
+        .title("Mail & berichten")
+        .icon(EnvelopeIcon)
+        .child(S.document().schemaType("mailSettings").documentId("mailSettings").title("Mail & berichten")),
       S.listItem()
         .title("Site-instellingen")
         .icon(CogIcon)
