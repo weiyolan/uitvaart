@@ -47,3 +47,15 @@ After editing GROQ in `sanity/lib/queries.ts` or any schema, run `npm run typege
 Photographs live in a central **Beeldbibliotheek** (`photo` documents). Each photo holds the image (hotspot/crop), a localized SEO `alt` (managed **once**, reused everywhere), an internal title and optional credit. Everywhere an image appears — `filmFigure` scans, the service index frame, and `seo.ogImage` — is a **strong reference** to a `photo`, not an embedded image. In the Studio, pick (or create inline) a photo from the reference picker; the frontend swaps the striped placeholder for the real `next/image` automatically (`components/shared/SanityImage.tsx`, LQIP blur included). Queries dereference the photo back into the `{asset, hotspot, crop, alt}` shape the components consume, so adding photos needs no code change. Remote images are allow-listed in `next.config.ts` (`cdn.sanity.io`).
 
 **Publish discipline:** references are strong — a `photo` that exists only as a draft resolves to `null` in the published site (placeholder shows, OG image omitted), so publish a photo together with the page that references it. Deleting a photo still in use is blocked by Sanity. Click-to-edit on an alt text in Presentation opens the `photo` document (alt's home), not the page.
+
+## Studio UX
+
+Adopted from the yoga Studio UX guide (`weiyolan/yoga`, branch `sanity-ui-guide`, `studio/SANITY-UI.md`). All in `sanity/components/StudioFields.tsx`, registered as `form.components.field` / `item` in `sanity.config.ts`:
+
+- **Help behind ⓘ** — every field `description` moves into a hover/tap popover after the title (`Help`).
+- **One-row fields** — short `string`/`number`/`url`/`date`/`slug`/`reference` fields render as `title | input | …` (CSS grid on Sanity's own markup; stacks below 300px). Text, booleans, option lists, arrays, objects and custom inputs keep full width.
+- **NL | EN | FR tabs** on localized fields (replaces the old "Andere talen" toggle). Non-active languages get `display: none` — never dropped from `members`, so the plugin's add/translate actions keep working. A `·` on a tab = still empty. The plugin's language header and ⊖ remove-language button are hidden via CSS.
+- **No releases / scheduled drafts** — one flow: edit the draft, then Publiceren.
+- Everything wraps `renderDefault`, so comments, the "…" menu, validation and change bars are unchanged.
+
+Rules for new schema: write a `description` saying *where on the site* and *what for* (+ "bv. …" / "Leeg = …"); only the default language is `required`; previews use `nlValue()` (never select an i18n array raw as `title`).

@@ -10,7 +10,7 @@ import { apiVersion, dataset, projectId } from "./sanity/env";
 import { schemaTypes } from "./sanity/schemaTypes";
 import { structure } from "./sanity/structure";
 import { resolve } from "./sanity/presentation/resolve";
-import { localeAwareInput } from "./sanity/components/LocaleArrayInput";
+import { StudioField, StudioItem } from "./sanity/components/StudioFields";
 import { LOCALES } from "./lib/i18n";
 
 /* Types that are created/ordered by the seed + structure, not via the
@@ -52,11 +52,15 @@ export default defineConfig({
   },
   form: {
     components: {
-      // Localized fields show only Dutch by default; EN/FR fold behind a
-      // per-field toggle. See sanity/components/LocaleArrayInput.tsx.
-      input: localeAwareInput,
+      // Help behind ⓘ, one-row short fields, NL | EN | FR tabs.
+      // See sanity/components/StudioFields.tsx and SANITY.md.
+      field: StudioField,
+      item: StudioItem,
     },
   },
+  // One flow: edit the draft, then Publiceren. No releases / scheduled drafts.
+  releases: { enabled: false },
+  scheduledDrafts: { enabled: false },
   document: {
     newDocumentOptions: (prev) =>
       prev.filter((item) => !LOCKED_TYPES.includes(item.templateId)),
