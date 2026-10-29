@@ -34,7 +34,7 @@ export async function deliverContact(
   const notify = settings.notifyOwner;
   const confirm = settings.sendConfirmation && Boolean(visitorEmail);
   const notification = buildNotificationEmail(payload, business);
-  const confirmation = buildConfirmationEmail(payload, business, settings.confirmation[langKey(payload)]);
+  const confirmation = buildConfirmationEmail(payload, business, settings.confirmation?.[langKey(payload)] ?? undefined);
 
   const messages = [
     notify && {

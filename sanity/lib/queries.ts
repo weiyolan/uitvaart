@@ -516,5 +516,5 @@ export const MAIL_SETTINGS_QUERY = defineQuery(`*[_id == "mailSettings"][0]{
   "sendConfirmation": coalesce(sendConfirmation, true),
   "fromName": coalesce(fromName, ""),
   "replyTo": coalesce(replyTo, ""),
-  "confirmation": coalesce(confirmation, {})
+  confirmation
 }`);

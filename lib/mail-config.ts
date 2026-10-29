@@ -26,7 +26,7 @@ export type MailSettings = {
   sendConfirmation: boolean;
   fromName: string;
   replyTo: string;
-  confirmation: Partial<Record<"nl" | "en" | "fr", MailOverrides>>;
+  confirmation?: Partial<Record<"nl" | "en" | "fr", MailOverrides | null>> | null;
 };
 
 export const DEFAULT_MAIL_SETTINGS: MailSettings = {

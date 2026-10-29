@@ -15,6 +15,61 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
+export type ContactMessage = {
+  _id: string;
+  _type: "contactMessage";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  status?: "new" | "answered" | "archived";
+  name?: string;
+  email?: string;
+  service?: string;
+  lang?: string;
+  receivedAt?: string;
+  answers?: Array<{
+    label?: string;
+    value?: string;
+    _type: "answer";
+    _key: string;
+  }>;
+  note?: string;
+  delivery?: string;
+};
+
+export type MailSettings = {
+  _id: string;
+  _type: "mailSettings";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  ownerEmail?: string;
+  notifyOwner?: boolean;
+  sendConfirmation?: boolean;
+  fromName?: string;
+  replyTo?: string;
+  confirmation?: {
+    nl?: {
+      subject?: string;
+      heading?: string;
+      lead?: string;
+      next?: string;
+    };
+    en?: {
+      subject?: string;
+      heading?: string;
+      lead?: string;
+      next?: string;
+    };
+    fr?: {
+      subject?: string;
+      heading?: string;
+      lead?: string;
+      next?: string;
+    };
+  };
+};
+
 export type ServiceReference = {
   _ref: string;
   _type: "reference";
@@ -522,6 +577,8 @@ export type SanityImageAsset = {
 };
 
 export type AllSanitySchemaTypes =
+  | ContactMessage
+  | MailSettings
   | ServiceReference
   | PhotoReference
   | HomePage
@@ -1128,6 +1185,47 @@ export type SERVICE_SEO_QUERY_RESULT = {
     | Array<never>;
 } | null;
 
+// Source: sanity/lib/queries.ts
+// Variable: MAIL_SETTINGS_QUERY
+// Query: *[_id == "mailSettings"][0]{  "ownerEmail": coalesce(ownerEmail, ""),  "notifyOwner": coalesce(notifyOwner, true),  "sendConfirmation": coalesce(sendConfirmation, true),  "fromName": coalesce(fromName, ""),  "replyTo": coalesce(replyTo, ""),  confirmation}
+export type MAIL_SETTINGS_QUERY_RESULT =
+  | {
+      ownerEmail: "";
+      notifyOwner: true;
+      sendConfirmation: true;
+      fromName: "";
+      replyTo: "";
+      confirmation: null;
+    }
+  | {
+      ownerEmail: string | "";
+      notifyOwner: boolean | true;
+      sendConfirmation: boolean | true;
+      fromName: string | "";
+      replyTo: string | "";
+      confirmation: {
+        nl?: {
+          subject?: string;
+          heading?: string;
+          lead?: string;
+          next?: string;
+        };
+        en?: {
+          subject?: string;
+          heading?: string;
+          lead?: string;
+          next?: string;
+        };
+        fr?: {
+          subject?: string;
+          heading?: string;
+          lead?: string;
+          next?: string;
+        };
+      } | null;
+    }
+  | null;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -1140,5 +1238,6 @@ declare module "@sanity/client" {
     '*[_type == "siteSettings"][0]{\n  "siteName": coalesce(business.siteName, "Milo Weiler"),\n  "title": coalesce(seo.metaTitle[language == $lang][0].value, seo.metaTitle[language == "nl"][0].value, "Milo Weiler"),\n  "description": coalesce(seo.metaDescription[language == $lang][0].value, seo.metaDescription[language == "nl"][0].value, ""),\n  "ogImage": seo.ogImage->{\n    "url": image.asset->url,\n    "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, "")\n  },\n  "noIndex": seo.noIndex == true\n}': SETTINGS_SEO_QUERY_RESULT;
     '*[_type == "homePage"][0]{\n  "title": coalesce(\n    seo.metaTitle[language == $lang][0].value,\n    seo.metaTitle[language == "nl"][0].value,\n    *[_type == "siteSettings"][0].seo.metaTitle[language == $lang][0].value,\n    *[_type == "siteSettings"][0].seo.metaTitle[language == "nl"][0].value,\n    "Milo Weiler"\n  ),\n  "description": coalesce(\n    seo.metaDescription[language == $lang][0].value,\n    seo.metaDescription[language == "nl"][0].value,\n    *[_type == "siteSettings"][0].seo.metaDescription[language == $lang][0].value,\n    *[_type == "siteSettings"][0].seo.metaDescription[language == "nl"][0].value,\n    ""\n  ),\n  "ogImage": coalesce(\n    seo.ogImage->{\n      "url": image.asset->url,\n      "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, "")\n    },\n    *[_type == "siteSettings"][0].seo.ogImage->{\n      "url": image.asset->url,\n      "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, "")\n    }\n  ),\n  "noIndex": seo.noIndex == true\n}': HOME_SEO_QUERY_RESULT;
     '*[_type == "service" && slug.current == $slug][0]{\n  "title": coalesce(\n    seo.metaTitle[language == $lang][0].value,\n    seo.metaTitle[language == "nl"][0].value,\n    coalesce(page.head.titleLine1[language == $lang][0].value, page.head.titleLine1[language == "nl"][0].value, "") + " " + coalesce(page.head.titleLine2[language == $lang][0].value, page.head.titleLine2[language == "nl"][0].value, "") + " \u2014 Milo Weiler"\n  ),\n  "description": coalesce(\n    seo.metaDescription[language == $lang][0].value,\n    seo.metaDescription[language == "nl"][0].value,\n    page.head.sub[language == $lang][0].value,\n    page.head.sub[language == "nl"][0].value,\n    ""\n  ),\n  "ogImage": coalesce(\n    seo.ogImage->{\n      "url": image.asset->url,\n      "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, "")\n    },\n    *[_type == "siteSettings"][0].seo.ogImage->{\n      "url": image.asset->url,\n      "alt": coalesce(alt[language == $lang][0].value, alt[language == "nl"][0].value, "")\n    }\n  ),\n  "noIndex": seo.noIndex == true,\n  "name": coalesce(name[language == $lang][0].value, name[language == "nl"][0].value, ""),\n  "faqItems": coalesce(page.faq.items[]{\n    "q": coalesce(q[language == $lang][0].value, q[language == "nl"][0].value, ""),\n    "a": coalesce(a[language == $lang][0].value, a[language == "nl"][0].value, "")\n  }, [])\n}': SERVICE_SEO_QUERY_RESULT;
+    '*[_id == "mailSettings"][0]{\n  "ownerEmail": coalesce(ownerEmail, ""),\n  "notifyOwner": coalesce(notifyOwner, true),\n  "sendConfirmation": coalesce(sendConfirmation, true),\n  "fromName": coalesce(fromName, ""),\n  "replyTo": coalesce(replyTo, ""),\n  confirmation\n}': MAIL_SETTINGS_QUERY_RESULT;
   }
 }
